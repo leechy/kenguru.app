@@ -1,14 +1,25 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+
+  <div *ngFor="let category of categories">
+
+    <section *ngIf="category.slug != 'uncategorized' && posts[category.id] && posts[category.id].length > 0">
+      <h2 class="category-title">[ {{ category.name | uppercase }} ]</h2>
+
+      <ion-scroll scrollX="true">
+        <ion-card *ngFor="let post of posts[category.id]" (click)="itemTapped($event, item)">
+          <div class="card-image" [ngStyle]="{ 'background-image': 'url(' + post._embedded['wp:featuredmedia'][0].source_url + ')' }"></div>
+          <div class="card-title" [innerHTML]="post.title.rendered"></div>
+        </ion-card>
+      </ion-scroll>
+
+    </section>
+
+  </div>
+
 </ion-content>

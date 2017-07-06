@@ -1,3 +1,36 @@
 page-home {
+  ion-scroll {
+    height: 268px;
 
+    .scroll-zoom-wrapper {
+      white-space: nowrap;
+      padding: 0 10px;
+    }
+
+    ion-card {
+      position: relative;
+      display: inline-block;
+      width: 240px !important;
+      height: 182px;
+      overflow: visible;
+    }
+
+    .card-image {
+      width: 240px;
+      height: 182px;
+      background-color: #ebebeb;
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .card-title {
+      position: absolute;
+      top: 100%;
+      padding: 5px;
+      width: 100%;
+      font-size: 1.6rem;
+      white-space: normal;
+      text-align: center;
+    }
+  }
 }
