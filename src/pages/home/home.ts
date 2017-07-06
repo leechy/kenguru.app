@@ -3,11 +3,15 @@ import { NavController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import { PostPage } from '../post/post';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  postPage = PostPage;
 
   categoriesUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/categories';
   categories: any;
@@ -17,17 +21,19 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private http: Http) {}
 
-  ionViewDidEnter() {
-    this.updatePostsList();
+  ionViewDidLoad() {
+    this.updatePostsList(null);
   }
 
-  updatePostsList() {
+  updatePostsList(refresher) {
   // retrieve categories
   this.http.get(this.categoriesUrl)
     .map(res => res.json())
     .subscribe(data => {
       this.categories = data;
-      console.log('categories', data);
+      // console.log('categories', data);
+
+      if (refresher) refresher.complete();
 
       // retrieve posts in each category
       this.categories.forEach(category => {
@@ -36,7 +42,7 @@ export class HomePage {
             .map(res => res.json())
             .subscribe(data => {
               this.posts[category.id] = data;
-              console.log('category', category.id, ' :: ', data);
+              // console.log('category', category.id, ' :: ', data);
             })
         }
       })
