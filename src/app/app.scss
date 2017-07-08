@@ -16,7 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 
-ion-title {
+.toolbar-background {
   background-image: url('../assets/title.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -24,12 +24,55 @@ ion-title {
 }
 
 .content {
-  background-color: color($colors, secondary);
+  background-color: color($colors, background);
 }
 
 .category-title {
+  margin: 16px 0 0;
   padding: 0 20px;
   font: 24px/32px 'Arial Narrow', Arial, sans-serif;
   color: #000;
   text-align: center;
+}
+
+/* Fonts */
+
+@font-face {
+  font-family: 'Agenda Black';
+  src: url('../assets/fonts/agendabg-black.woff') format('woff'),
+       url('../assets/fonts/agendabg-black.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Agenda Condensed';
+  src: url('../assets/fonts/agendabg-condensed.woff') format('woff'),
+       url('../assets/fonts/agendabg-condensed.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Agenda';
+  src: url('../assets/fonts/agendabg-bold.woff') format('woff'),
+       url('../assets/fonts/agendabg-bold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Agenda';
+  src: url('../assets/fonts/agendabg-italic.woff') format('woff'),
+       url('../assets/fonts/agendabg-italic.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Agenda';
+  src: url('../assets/fonts/agendabg-regular.woff') format('woff'),
+       url('../assets/fonts/agendabg-regular.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }

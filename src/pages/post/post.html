@@ -8,7 +8,9 @@
 
 
 <ion-content padding>
-  <img *ngIf="post._embedded['wp:featuredmedia'][0].source_url" src="{{ post._embedded['wp:featuredmedia'][0].source_url }}" />
-  <h1 [innerHtml]="post.title.rendered"></h1>
-  <div [innerHtml]="post.content.rendered"></div>
+  <div class="content-width">
+    <img *ngIf="post._embedded['wp:featuredmedia'][0].source_url" src="{{ post._embedded['wp:featuredmedia'][0].source_url }}" />
+    <h1 [innerHtml]="post.title.rendered"></h1>
+    <div [innerHtml]="post.content.rendered"></div>
+  </div>
 </ion-content>

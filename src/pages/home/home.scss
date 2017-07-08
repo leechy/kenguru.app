@@ -13,6 +13,9 @@ page-home {
       width: 240px !important;
       height: 182px;
       overflow: visible;
+      &:last-child {
+        margin-right: 20px;
+      }
     }
 
     .card-image {
@@ -20,7 +23,7 @@ page-home {
       height: 182px;
       background-color: #ebebeb;
       background-size: cover;
-      background-position: 50% 50%;
+      background-position: 50% 25%;
     }
 
     .card-title {
