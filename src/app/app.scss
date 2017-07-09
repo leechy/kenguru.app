@@ -15,11 +15,15 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
-.toolbar-background {
-  background-image: url('../assets/title.svg');
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+.toolbar-title {
+  overflow: visible;
+}
+.toolbar--title {
+  display: inline-block;
+  margin: 0 -16px;
+  width: 180px;
+  height: 28px;
+  background: url('../assets/title.svg') no-repeat left center;
   background-size: contain;
 }
 
@@ -30,15 +34,14 @@
 .category-title {
   margin: 16px 0 0;
   padding: 0 20px;
-  font: 24px/32px 'Arial Narrow', Arial, sans-serif;
+  font: 24px/32px 'AgendaBgCondensed', 'Arial Narrow', Arial, sans-serif;
   color: #000;
-  text-align: center;
 }
 
 /* Fonts */
 
 @font-face {
-  font-family: 'Agenda-Black';
+  font-family: 'AgendaBgBlack';
   src: url('../assets/fonts/agendabg-black.woff') format('woff'),
        url('../assets/fonts/agendabg-black.ttf')  format('truetype');
   font-weight: normal;
@@ -46,7 +49,7 @@
 }
 
 @font-face {
-  font-family: 'Agenda-Condensed';
+  font-family: 'AgendaBgCondensed';
   src: url('../assets/fonts/agendabg-condensed.woff') format('woff'),
        url('../assets/fonts/agendabg-condensed.ttf')  format('truetype');
   font-weight: normal;
