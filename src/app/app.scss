@@ -38,15 +38,15 @@
 /* Fonts */
 
 @font-face {
-  font-family: 'Agenda Black';
+  font-family: 'Agenda-Black';
   src: url('../assets/fonts/agendabg-black.woff') format('woff'),
        url('../assets/fonts/agendabg-black.ttf')  format('truetype');
-  font-weight: bold;
+  font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Agenda Condensed';
+  font-family: 'Agenda-Condensed';
   src: url('../assets/fonts/agendabg-condensed.woff') format('woff'),
        url('../assets/fonts/agendabg-condensed.ttf')  format('truetype');
   font-weight: normal;
