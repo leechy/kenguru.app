@@ -1,0 +1,26 @@
+page-category {
+  .thumbnail-image {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
+  }
+
+  .item-ios .thumbnail-image {
+    width: $item-ios-thumbnail-size;
+    height: $item-ios-thumbnail-size;
+  }
+
+  .item-md .thumbnail-image {
+    width: $item-md-thumbnail-size;
+    height: $item-md-thumbnail-size;
+  }
+
+  .item-wp .thumbnail-image {
+    width: $item-wp-thumbnail-size;
+    height: $item-wp-thumbnail-size;
+  }
+
+  ion-label {
+    white-space: normal;
+  }
+}

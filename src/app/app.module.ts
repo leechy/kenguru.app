@@ -8,12 +8,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PostPage } from '../pages/post/post';
+import { CategoryPage } from '../pages/category/category';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    PostPage
+    PostPage,
+    CategoryPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { PostPage } from '../pages/post/post';
   entryComponents: [
     MyApp,
     HomePage,
-    PostPage
+    PostPage,
+    CategoryPage
   ],
   providers: [
     StatusBar,
