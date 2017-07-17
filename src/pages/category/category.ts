@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { PostPage } from '../post/post';
 
-@IonicPage()
 @Component({
   selector: 'page-category',
   templateUrl: 'category.html',

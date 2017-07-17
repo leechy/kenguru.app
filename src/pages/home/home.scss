@@ -1,8 +1,21 @@
 page-home {
 
+  .content {
+    background-color: color($colors, background);
+  }
+
   button[float-right] {
     margin-right: 10px;
     font-family: Agenda, Arial sans-serif;
+    color: #ffe55b;
+  }
+
+  .category-title {
+    margin: 16px 0 0;
+    padding: 0 20px;
+    font: 24px/32px 'AgendaBgCondensed', 'Arial Narrow', Arial, sans-serif;
+    color: #fff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   }
 
   ion-scroll {
@@ -40,6 +53,8 @@ page-home {
       font: 1.6rem/1.8rem 'Agenda', 'Arial', sans-serif;
       white-space: normal;
       text-align: center;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     }
   }
 }
