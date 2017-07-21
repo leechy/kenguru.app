@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { PostPage } from '../post/post';
+import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-category',
@@ -12,6 +13,7 @@ import { PostPage } from '../post/post';
 export class CategoryPage implements OnInit {
 
   postPage = PostPage;
+  searchPage = SearchPage;
 
   category: any;
 

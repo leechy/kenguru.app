@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-searchbar (ionInput)="getResults($event)" #search></ion-searchbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!-- подканване към търсене -->
+  <div class="search-messages" *ngIf="!isRequest && !isLoadingResults">Напишете дума в&nbsp;полето за&nbsp;търсене отгоре, за&nbsp;да&nbsp;намерим статиите, които търсите.</div>
+  <!-- спинер по време на търсенето -->
+  <div class="search-messages" *ngIf="isLoadingResults">
+    <ion-spinner></ion-spinner>
+  </div>
+  <!-- резултатите от търсенето -->
+  <ion-list *ngIf="!isNothingFound">
+    <button ion-item *ngFor="let post of posts" [navPush]="postPage" [navParams]="post">
+      <ion-thumbnail item-start>
+        <div class="thumbnail-image" *ngIf="post._embedded" [ngStyle]="{ 'background-image': 'url(' + post._embedded['wp:featuredmedia'][0].source_url + ')' }"></div>
+      </ion-thumbnail>
+      <h2 *ngIf="post.title" [innerHTML]="post.title.rendered"></h2>
+    </button>
+  </ion-list>
+  <!-- съобщение, че нищо не е намерено -->
+  <div class="search-messages" *ngIf="isRequest&& !isLoadingResults && isNothingFound">По вашето запитване не&nbsp;е&nbsp;намерено нищо. Потърсете нещо друго, ако обичате.</div>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="askForMoreResults">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { PostPage } from '../post/post';
 import { CategoryPage } from '../category/category';
+import { SearchPage } from '../search/search';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class HomePage {
 
   postPage = PostPage;
   categoryPage = CategoryPage;
+  searchPage = SearchPage;
 
   categoriesUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/categories';
   categories: any;
@@ -35,26 +37,26 @@ export class HomePage {
       loading.present();
     }
 
-      // retrieve categories
-      this.http.get(this.categoriesUrl)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.categories = data;
+    // retrieve categories
+    this.http.get(this.categoriesUrl)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.categories = data;
 
-          if (refresher) refresher.complete();
-          if (loading) loading.dismiss();
+      if (refresher) refresher.complete();
+      if (loading) loading.dismiss();
 
-          // retrieve posts in each category
-          this.categories.forEach(category => {
-            if (category.slug != 'uncategorized') {
-              this.http.get(this.postsUrl + category.id)
-                .map(res => res.json())
-                .subscribe(data => {
-                  this.posts[category.id] = data;
-                })
-            }
-          });
-        });
+      // retrieve posts in each category
+      this.categories.forEach(category => {
+        if (category.slug != 'uncategorized') {
+          this.http.get(this.postsUrl + category.id)
+            .map(res => res.json())
+            .subscribe(data => {
+              this.posts[category.id] = data;
+            })
+        }
+      });
+    });
 
   }
 

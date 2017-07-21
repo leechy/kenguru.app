@@ -2,7 +2,7 @@
 <widget id="bg.kenguru.app" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Списание Кенгуру</name>
     <description>Четете последните новини и най-интересните статии от списанието</description>
-    <author email="leechy@leechy.ru" href="http://apps.leechy.ru/">Andrey Lechev</author>
+    <author email="apps@leechylabs.com" href="http://www.leechylabs.com/">Andrey Lechev</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -24,6 +24,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
