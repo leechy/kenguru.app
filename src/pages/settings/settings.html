@@ -10,6 +10,21 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+	<h3 margin-left></h3>
+	<p margin></p>
+
+	<ion-list>
+		<ion-list-header>Размер на текста</ion-list-header>
+		<ion-item>
+			<ion-range min="0" max="10" step="2" snaps="true" value="6" [(ngModel)]="textSize" (ionChange)="onTextSizeChange($event)">
+				<ion-label range-left class="small-text">A</ion-label>
+				<ion-label range-right class="large-text">A</ion-label>
+			</ion-range>
+		</ion-item>
+	</ion-list>
+
+	<p margin class="text-size-demo" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem', 'line-height': (2 + (textSize * 0.15)) + 'rem'}">Този абзац е&nbsp;пример за&nbsp;това, какъв ще&nbsp;бъде размера на&nbsp;шрифта в&nbsp;статиите. С&nbsp;помощта на&nbsp;указателя отгоре, можете да&nbsp;промените размера, за&nbsp;да&nbsp;четете по-лесно на&nbsp;вашето устройство.</p>
 
 </ion-content>

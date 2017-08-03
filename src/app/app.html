@@ -6,13 +6,13 @@
 	</ion-header>
 	<ion-content>
 		<ion-list>
-			<button ion-item (click)="navPush(signInPage)" *ngIf="!isAuthenticated">Вход или Регистрация</button>
+			<button ion-item (click)="setRoot(signInPage)" *ngIf="!isAuthenticated">Регистрация и вход</button>
 			<ion-item  *ngIf="isAuthenticated">
 				{{ userEmail }}
 				<button ion-button item-end (click)="logout()">Изход</button>
 			</ion-item>
+			<button ion-item (click)="setRoot(settingsPage)">Настройки</button>
 			<button ion-item (click)="setRoot(rootPage)">Статии</button>
-			<!-- <button ion-item (click)="navPush(settingsPage)" *ngIf="isAuthenticated">Настройки</button> -->
 		</ion-list>
 	</ion-content>
 </ion-menu>

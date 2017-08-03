@@ -5,23 +5,44 @@
 				<ion-icon name="menu"></ion-icon>
 			</button>
 		</ion-buttons>
-		<ion-title>Регистрация</ion-title>
+		<ion-title>Регистрация и вход</ion-title>
 	</ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+	<h3 margin-left>С помоща на друга служба</h3>
+	<p margin>Ако вече сте се регистрирали в някоя от тези служби, то можете да използвате тези регистрации, за да не създавате още една регистрация и да не помните още една парола.</p>
+
+	<div padding>
+		<button ion-button block color="facebookbtn">
+			<ion-icon name="logo-facebook"></ion-icon>
+			&nbsp;Фейсбук
+		</button>
+		<button ion-button block color="googlebtn">
+			<ion-icon name="logo-google"></ion-icon>
+			&nbsp;Гугъл
+		</button>
+	</div>
+
+
+	<h3 margin-left>С електронна поща</h3>
+	<p margin>Просто въведете адреса на електронната си поща и желаемата парола. На този пощенски адрес ще получавате писма, ако сте спечелили някакви награди и подаръци.</p>
+
 	<form #f="ngForm" (ngSubmit)="onSignup(f)">
-		<ion-list>
+		<ion-list  no-margin>
 			<ion-item>
-				<ion-label floating>Електронна поща</ion-label>
+				<ion-label stacked color="primary">Електронна поща</ion-label>
 				<ion-input type="email" name="email" ngModel required></ion-input>
 			</ion-item>
 			<ion-item>
-				<ion-label floating>Парола</ion-label>
+				<ion-label stacked color="primary">Парола</ion-label>
 				<ion-input type="password" name="password" ngModel required [minlength]="6"></ion-input>
 			</ion-item>
 		</ion-list>
-		<button ion-button block type="submit" [disabled]="!f.valid">Зарегистрирай ме!</button>
+		<div padding>
+			<button ion-button block type="submit" [disabled]="!f.valid">Влез</button>
+		</div>
 	</form>
 </ion-content>

@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content padding>
-	<div class="content-width">
+	<div class="content-width" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem'}">
 		<img *ngIf="post._embedded['wp:featuredmedia'][0].source_url" src="{{ post._embedded['wp:featuredmedia'][0].source_url }}" />
 		<h1 [innerHtml]="post.title.rendered"></h1>
 		<div [innerHtml]="post.content.rendered"></div>

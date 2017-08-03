@@ -40,7 +40,7 @@ export class SignInPage {
 					.then(data => {
 						console.log('authService.signin', data);
 						loading.dismiss();
-            this.navCtrl.setRoot(this.homePage)
+						this.navCtrl.setRoot(this.settingsPage)
 						// this.navCtrl.pop();
 						// this.navCtrl.push(this.settingsPage);
 					})

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { SettingsService } from '../../services/settings';
 
 @Component({
   selector: 'page-settings',
@@ -7,11 +8,23 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  textSize: number = 6;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private settingsService: SettingsService
+  ) {}
+
+  ionViewDidEnter() {
+    this.settingsService.getTextSize()
+      .then((val) => {
+        this.textSize = val;
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsPage');
+  onTextSizeChange(event) {
+    this.settingsService.setTextSize(event.value);
   }
 
 }
