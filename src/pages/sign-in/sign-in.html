@@ -1,0 +1,27 @@
+<ion-header>
+	<ion-navbar>
+		<ion-buttons start>
+			<button ion-button icon-only menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-title>Регистрация</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<form #f="ngForm" (ngSubmit)="onSignup(f)">
+		<ion-list>
+			<ion-item>
+				<ion-label floating>Електронна поща</ion-label>
+				<ion-input type="email" name="email" ngModel required></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label floating>Парола</ion-label>
+				<ion-input type="password" name="password" ngModel required [minlength]="6"></ion-input>
+			</ion-item>
+		</ion-list>
+		<button ion-button block type="submit" [disabled]="!f.valid">Зарегистрирай ме!</button>
+	</form>
+</ion-content>

@@ -1,7 +1,12 @@
 <ion-header>
-  <ion-navbar>
-    <ion-searchbar (ionInput)="getResults($event)" #search></ion-searchbar>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-buttons start>
+			<button ion-button icon-only menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-searchbar (ionInput)="getResults($event)" #search></ion-searchbar>
+	</ion-navbar>
 </ion-header>
 
 <ion-content>

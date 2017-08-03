@@ -16,15 +16,19 @@
 // automatically applied to the <body> element in the app.
 
 .toolbar-title {
-  overflow: visible;
+	overflow: visible;
 }
 .toolbar--title {
-  display: inline-block;
-  margin: 0 -16px;
-  width: 180px;
-  height: 28px;
-  background: url('../assets/title.svg') no-repeat left center;
-  background-size: contain;
+	display: inline-block;
+	margin: 0 -16px;
+	width: 180px;
+	height: 28px;
+	background: url('../assets/title.svg') no-repeat left center;
+	background-size: contain;
+}
+
+.bar-buttons-md {
+	order: 1
 }
 
 

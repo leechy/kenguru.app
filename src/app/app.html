@@ -1,1 +1,20 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="nav" persistent="true">
+	<ion-header>
+		<ion-toolbar>
+			<ion-title>Меню</ion-title>
+		</ion-toolbar>
+	</ion-header>
+	<ion-content>
+		<ion-list>
+			<button ion-item (click)="navPush(signInPage)" *ngIf="!isAuthenticated">Вход или Регистрация</button>
+			<ion-item  *ngIf="isAuthenticated">
+				{{ userEmail }}
+				<button ion-button item-end (click)="logout()">Изход</button>
+			</ion-item>
+			<button ion-item (click)="setRoot(rootPage)">Статии</button>
+			<!-- <button ion-item (click)="navPush(settingsPage)" *ngIf="isAuthenticated">Настройки</button> -->
+		</ion-list>
+	</ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #nav></ion-nav>

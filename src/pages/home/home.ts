@@ -33,7 +33,9 @@ export class HomePage {
   updatePostsList(refresher) {
     let loading: Loading;
     if (!refresher) {
-      loading = this.loadingCtrl.create();
+      loading = this.loadingCtrl.create({
+        content: 'Зареждаме статиите...'
+      });
       loading.present();
     }
 
