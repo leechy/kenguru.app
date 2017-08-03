@@ -5,7 +5,6 @@ import { LoadingController, AlertController } from 'ionic-angular';
 
 import { AuthService } from '../../services/auth';
 import { HomePage } from '../home/home';
-import { SettingsPage } from '../settings/settings';
 
 @Component({
 	selector: 'page-sign-in',
@@ -13,8 +12,7 @@ import { SettingsPage } from '../settings/settings';
 })
 export class SignInPage {
 
-  settingsPage: any = SettingsPage;
-  homePage: any = HomePage;
+	homePage: any = HomePage;
 
 	constructor(private navCtrl: NavController,
 	            private authService: AuthService,
@@ -32,7 +30,7 @@ export class SignInPage {
 			.then(data => {
 				console.log('authService.signup', data);
 				loading.dismiss();
-				this.navCtrl.setRoot(this.settingsPage);
+				this.navCtrl.setRoot(this.homePage);
 			})
 			.catch(signUpError => {
 				console.log('authService Signup Error', signUpError);
@@ -40,9 +38,7 @@ export class SignInPage {
 					.then(data => {
 						console.log('authService.signin', data);
 						loading.dismiss();
-						this.navCtrl.setRoot(this.settingsPage)
-						// this.navCtrl.pop();
-						// this.navCtrl.push(this.settingsPage);
+						this.navCtrl.setRoot(this.homePage)
 					})
 					.catch(signInError => {
 						console.log('authService Signin Error', signInError);

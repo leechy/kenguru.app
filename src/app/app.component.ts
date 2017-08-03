@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 import { AuthService } from '../services/auth';
+import { SettingsService } from '../services/settings';
 
 import { HomePage } from '../pages/home/home';
 import { SettingsPage } from '../pages/settings/settings';
@@ -22,11 +23,14 @@ export class MyApp {
   userEmail: string = '';
   @ViewChild('nav') nav: NavController;
 
-	constructor(platform: Platform,
-	            statusBar: StatusBar,
-	            splashScreen: SplashScreen,
-	            private menuCtrl: MenuController,
-	            private authService: AuthService) {
+	constructor(
+		platform: Platform,
+		statusBar: StatusBar,
+		splashScreen: SplashScreen,
+		private menuCtrl: MenuController,
+		private authService: AuthService,
+		public settingsService: SettingsService
+	) {
 		firebase.initializeApp({
 			apiKey: "AIzaSyDJaLK-z6TL2c3tn_PJrKlR_fKNU3iofBY",
 			authDomain: "kenguruapp.firebaseapp.com"
@@ -38,7 +42,7 @@ export class MyApp {
 			} else {
 				this.isAuthenticated = false;
 			}
-		})
+		});
 
 		platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.

@@ -17,10 +17,7 @@ export class SettingsPage {
   ) {}
 
   ionViewDidEnter() {
-    this.settingsService.getTextSize()
-      .then((val) => {
-        this.textSize = val;
-      });
+    this.textSize = this.settingsService.getTextSize();
   }
 
   onTextSizeChange(event) {

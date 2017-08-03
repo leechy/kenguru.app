@@ -19,11 +19,8 @@ export class PostPage implements OnInit {
     private settingsService: SettingsService
   ) {}
 
-  ionViewDidEnter() {
-    this.settingsService.getTextSize()
-      .then((val) => {
-        this.textSize = val;
-      });
+  ionViewWillEnter() {
+    this.textSize = this.settingsService.getTextSize();
   }
 
   ngOnInit() {
