@@ -30,7 +30,7 @@
 
     <section *ngIf="category.slug != 'uncategorized' && posts[category.id] && posts[category.id].length > 0">
       <button ion-button small clear float-right [navPush]="categoryPage" [navParams]="category">всички</button>
-      <h2 class="category-title">[ {{ category.name | uppercase }} ]</h2>
+      <h2 class="category-title">{{ category.name | uppercase }}</h2>
 
       <ion-scroll scrollX="true">
         <ion-card *ngFor="let post of posts[category.id]" [navPush]="postPage" [navParams]="post">

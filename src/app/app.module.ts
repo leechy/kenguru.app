@@ -14,6 +14,7 @@ import { PostPage } from '../pages/post/post';
 import { CategoryPage } from '../pages/category/category';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
+import { ChildPage } from '../pages/child/child';
 import { SignInPage } from '../pages/sign-in/sign-in';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SignInPage } from '../pages/sign-in/sign-in';
     CategoryPage,
     SearchPage,
     SettingsPage,
+    ChildPage,
     SignInPage
   ],
   imports: [
@@ -40,14 +42,15 @@ import { SignInPage } from '../pages/sign-in/sign-in';
     CategoryPage,
     SearchPage,
     SettingsPage,
+    ChildPage,
     SignInPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-	AuthService,
-	SettingsService
+    AuthService,
+    SettingsService
   ]
 })
 export class AppModule {}

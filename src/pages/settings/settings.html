@@ -12,8 +12,51 @@
 
 <ion-content>
 
-	<h3 margin-left></h3>
-	<p margin></p>
+	<h2 class="category-title">Персонализация</h2>
+	<p margin class="explanation">Ако укажете кога очаквате бебето&nbsp;си, всяка седмица ще&nbsp;обновяваме съдържанието за&nbsp;вас и&nbsp;ще следим бременността&nbsp;ви, обяснявайки какво да&nbsp;очаквате.</p>
+
+	<ion-list>
+		<ion-list-header>
+			<ion-label>Бременност</ion-label>
+			<ion-toggle [(ngModel)]="isPregnant" (ionChange)="onBirthDateChange()"></ion-toggle>
+		</ion-list-header>
+		<ion-item>
+			<ion-label>Очаквам дете на</ion-label>
+			<ion-datetime
+				[disabled]="!isPregnant"
+				displayFormat="D MMMM YYYY г."
+				pickerFormat="D MMMM YYYY"
+				min="{{ yesterday.toISOString() }}"
+				max="{{ fourtyWeeksFromToday.toISOString() }}"
+				[(ngModel)]="birthDate"
+				(ionChange)="onBirthDateChange()"
+				monthNames="януари, февруари, март, април, май, юни, юли, август, септември, октомври, ноември, декември"
+				monthShortNames="яну, фев, мар, апр, май, юни, юли, авг, сеп, окт, ное, дек"
+				cancelText="Отмяна"
+				doneText="Готово"
+			></ion-datetime>
+		</ion-item>
+	</ion-list>
+
+
+	<p margin class="explanation">Укажете колко са&nbsp;големи децата&nbsp;ви и&nbsp;всеки месец ще&nbsp;ви&nbsp;показваме статии именно за&nbsp;вас. А&nbsp;може за&nbsp;рожденните им&nbsp;дни и&nbsp;някой подарък да&nbsp;получите.</p>
+
+	<ion-list>
+		<ion-list-header>
+			Деца
+			<button ion-button outline item-end [navPush]="childPage">Добави</button>
+		</ion-list-header>
+		<button ion-item *ngFor="let child of children; let i = index" [navPush]="childPage" [navParams]="i">
+			<ion-label>{{ child.name }}</ion-label>
+			<ion-note item-end>{{ formatDate(child.birthDate) }}</ion-note>
+		</button>
+		<ion-item *ngIf="!children.length">
+			<ion-note>Няма деца</ion-note>
+		</ion-item>
+	</ion-list>
+
+
+	<h2 class="category-title">Четене</h2>
 
 	<ion-list>
 		<ion-list-header>Размер на текста</ion-list-header>
@@ -25,6 +68,6 @@
 		</ion-item>
 	</ion-list>
 
-	<p margin class="text-size-demo" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem', 'line-height': (2 + (textSize * 0.15)) + 'rem'}">Този абзац е&nbsp;пример за&nbsp;това, какъв ще&nbsp;бъде размера на&nbsp;шрифта в&nbsp;статиите. С&nbsp;помощта на&nbsp;указателя отгоре, можете да&nbsp;промените размера, за&nbsp;да&nbsp;четете по-лесно на&nbsp;вашето устройство.</p>
+	<p margin class="text-size-demo" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem', 'line-height': (2 + (textSize * 0.15)) + 'rem'}">Този абзац е&nbsp;пример за&nbsp;това, какъв ще&nbsp;бъде размера на&nbsp;шрифта в&nbsp;статиите. С&nbsp;помощта на&nbsp;указателя отгоре, можете да&nbsp;промените размера на&nbsp;текста, за&nbsp;да&nbsp; намерите размера, при&nbsp;който ще&nbsp;четете най-комфортно на&nbsp;вашето устройство.</p>
 
 </ion-content>

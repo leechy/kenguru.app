@@ -1,0 +1,44 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-title *ngIf="!(childNo >= 0)">Добавяне на дете</ion-title>
+		<ion-title *ngIf="childNo >= 0">{{ child.name }}</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<ion-list  no-margin>
+		<ion-item>
+			<ion-label stacked color="primary">Име</ion-label>
+			<ion-input type="text" [(ngModel)]="child.name" required></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label stacked color="primary">Дата на раждане</ion-label>
+			<ion-datetime
+				displayFormat="D MMMM YYYY г."
+				pickerFormat="D MMMM YYYY"
+				min="{{ eighteenYearsAgo.toISOString() }}"
+				max="{{ today.toISOString() }}"
+				[(ngModel)]="child.birthDate"
+				monthNames="януари, февруари, март, април, май, юни, юли, август, септември, октомври, ноември, декември"
+				monthShortNames="яну, фев, мар, апр, май, юни, юли, авг, сеп, окт, ное, дек"
+				cancelText="Отмяна"
+				doneText="Готово"
+			></ion-datetime>
+		</ion-item>
+	</ion-list>
+	<div padding>
+		<button ion-button block (click)="saveChild()">
+			<span *ngIf="!(childNo >= 0)">Добави</span>
+			<span *ngIf="childNo >= 0">Запиши измененията</span>
+		</button>
+	</div>
+
+</ion-content>
+
+<ion-footer padding *ngIf="childNo >= 0">
+	<button ion-button block (click)="removeChild()" color="danger">Изтрий</button>
+</ion-footer>
