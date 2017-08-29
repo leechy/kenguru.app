@@ -12,4 +12,14 @@ export class AuthService {
   logout() {
     firebase.auth().signOut();
   }
+
+  facebookLogin() {
+    return firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  }
+
+  credentialSignIn(accessToken) {
+    // for now it's only facebook
+    const facebookCredential = firebase.auth.FacebookAuthProvider.credential(accessToken);
+    return firebase.auth().signInWithCredential(facebookCredential);
+  }
 }

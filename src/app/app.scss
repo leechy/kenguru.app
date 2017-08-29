@@ -33,6 +33,32 @@
 }
 
 
+ion-menu .item-md ion-icon[item-left] + .item-inner,
+ion-menu .item-md ion-icon[item-start] + .item-inner, {
+	margin-left: 0;
+}
+
+ion-menu .item > ion-icon[small]:first-child,
+ion-menu .item-inner > ion-icon[small]:first-child {
+	min-width: 42px;
+	margin: -16px 0px -16px -16px;
+	padding: 14px 10px 14px 18px;
+}
+
+.list-md,
+.list-wp,
+.list-ios {
+	.item-block {
+		&.catitem .item-inner {
+			padding-left: 16px;
+		}
+		&.subcatitem .item-inner {
+			margin-left: 56px;
+		}
+	}
+}
+
+
 /* Fonts */
 
 @font-face {

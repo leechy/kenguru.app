@@ -23,7 +23,11 @@ export class CategoryPage implements OnInit {
   askForMoreResults: boolean = true;
   postsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&per_page=' + this.per_page + '&categories=';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private http: Http
+  ) {}
 
   ngOnInit() {
     this.category = this.navParams.data;

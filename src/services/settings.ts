@@ -13,10 +13,14 @@ export class SettingsService {
 
   updateValuesFromStorage() {
     this.storage.get('text-size').then((val) => {
-      this.textSize = val;
+      if (val) {
+        this.textSize = val;
+      }
     });
     this.storage.get('birth-date').then((val) => {
-      this.birthDate = val;
+      if (val) {
+        this.birthDate = val;
+      }
     });
     this.storage.get('children').then((val) => {
       if (val) {

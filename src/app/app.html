@@ -6,13 +6,28 @@
 	</ion-header>
 	<ion-content>
 		<ion-list>
-			<button ion-item (click)="setRoot(signInPage)" *ngIf="!isAuthenticated">Регистрация и вход</button>
+			<button ion-item (click)="setRoot($event, signInPage)" *ngIf="!isAuthenticated">Регистрация и вход</button>
 			<ion-item  *ngIf="isAuthenticated">
 				{{ userEmail }}
 				<button ion-button item-end (click)="logout()">Изход</button>
 			</ion-item>
-			<button ion-item (click)="setRoot(settingsPage)">Настройки</button>
-			<button ion-item (click)="setRoot(rootPage)">Корица</button>
+			<button ion-item (click)="setRoot($event, rootPage)">Корица</button>
+
+			<ng-container *ngFor="let category of categories[0]">
+				<button ion-item (tap)="setRoot($event, categoryPage, category)">
+					<ion-icon name="{{ !categories[category.id]? '' : category.expanded? 'arrow-dropup' : 'arrow-dropdown' }}" item-start small></ion-icon>
+					{{ category.name }}
+					<ion-note item-end>{{ category.count }}</ion-note>
+				</button>
+				<ng-container *ngIf="categories[category.id] && category.expanded">
+					<button ion-item class="subcatitem" *ngFor="let subcategory of categories[category.id]" (click)="setRoot($event, categoryPage, subcategory)">
+						{{ subcategory.name }}
+						<ion-note item-end>{{ subcategory.count }}</ion-note>
+					</button>
+				</ng-container>
+			</ng-container>
+
+			<button ion-item (click)="setRoot($event, settingsPage)">Настройки</button>
 		</ion-list>
 	</ion-content>
 </ion-menu>

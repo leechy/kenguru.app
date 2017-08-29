@@ -7,6 +7,11 @@ import { PostPage } from '../post/post';
 import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 
+import { Store } from "@ngrx/store";
+import * as CategoryActions from "./../../actions/category";
+import { AppState } from './../../reducers/categories';
+import { Observable } from "rxjs/Observable";
+
 
 @Component({
   selector: 'page-home',
@@ -19,12 +24,18 @@ export class HomePage {
   searchPage = SearchPage;
 
   categoriesUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/categories';
-  categories: any;
+  categories: any[] = [];
 
   postsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&categories=';
   posts: any[] = [];
 
-  constructor(public navCtrl: NavController, private http: Http, public loadingCtrl: LoadingController) {}
+  constructor(
+    public navCtrl: NavController,
+    private http: Http,
+    public loadingCtrl: LoadingController,
+    private store: Store<AppState>
+  ) {
+  }
 
   ionViewDidLoad() {
     this.updatePostsList(null);
@@ -43,19 +54,24 @@ export class HomePage {
     this.http.get(this.categoriesUrl)
     .map(res => res.json())
     .subscribe(data => {
-      this.categories = data;
 
       if (refresher) refresher.complete();
       if (loading) loading.dismiss();
 
+      this.store.dispatch(new CategoryActions.Reset());
+      this.categories = data;
+
       // retrieve posts in each category
       this.categories.forEach(category => {
         if (category.slug != 'uncategorized') {
-          this.http.get(this.postsUrl + category.id)
-            .map(res => res.json())
-            .subscribe(data => {
-              this.posts[category.id] = data;
-            })
+          this.store.dispatch(new CategoryActions.Push(category));
+          if (category.parent == 0) {
+            this.http.get(this.postsUrl + category.id)
+              .map(res => res.json())
+              .subscribe(data => {
+                this.posts[category.id] = data;
+              })
+          }
         }
       });
     });
