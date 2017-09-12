@@ -26,6 +26,11 @@
     </ion-refresher-content>
   </ion-refresher>
 
+	<div>
+		Дата на раждане на бебето: {{ birthDate }}<br>
+		Деца: <span *ngFor="let child of children">{{ child.birthDate }}</span>
+	</div>
+
   <div *ngFor="let category of categories">
 
     <section *ngIf="category.slug != 'uncategorized' && category.count && category.parent == 0">

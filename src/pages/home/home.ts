@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, Loading } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { SettingsService } from '../../services/settings';
 
 import { PostPage } from '../post/post';
 import { CategoryPage } from '../category/category';
@@ -28,15 +29,22 @@ export class HomePage {
   postsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&categories=';
   posts: any[] = [];
 
+  birthDate: string = null;
+  children: any[] = [];
+
   constructor(
     public navCtrl: NavController,
     private http: Http,
     public loadingCtrl: LoadingController,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private settingsService: SettingsService
   ) {
   }
 
   ionViewDidLoad() {
+    this.birthDate = this.settingsService.getBirthDate();
+    this.children = this.settingsService.getChildren();
+
     this.updatePostsList(null);
   }
 
