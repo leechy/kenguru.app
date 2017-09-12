@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { NgForm } from "@angular/forms";
 import { LoadingController, AlertController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../../services/auth';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../models/app-state.interface';
+import { AuthInterface } from '../../models/auth.interface';
+import * as AuthActions from '../../store/auth.actions';
 import { Facebook } from '@ionic-native/facebook';
 import { HomePage } from '../home/home';
 
@@ -11,7 +16,9 @@ import { HomePage } from '../home/home';
 	selector: 'page-sign-in',
 	templateUrl: 'sign-in.html',
 })
-export class SignInPage {
+export class SignInPage implements OnInit {
+
+  authState$: Observable<AuthInterface>;
 
   userProfile: any = null;
   homePage: any = HomePage;
@@ -22,8 +29,13 @@ export class SignInPage {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private facebook: Facebook,
-    private platform: Platform
+    private platform: Platform,
+    private store: Store<AppState>
   ) {}
+
+  ngOnInit() {
+    this.authState$ = this.store.select('auth');
+  }
 
 	onSignup(form: NgForm) {
 		console.log('onSignUp', form.value);
@@ -35,14 +47,15 @@ export class SignInPage {
 			.then(data => {
 				console.log('authService.signup', data);
 				loading.dismiss();
-				this.navCtrl.setRoot(this.homePage);
+				this.store.dispatch(new AuthActions.SignUp(form.value.email));
 			})
 			.catch(signUpError => {
 				console.log('authService Signup Error', signUpError);
 				this.authService.signin(form.value.email, form.value.password)
 					.then(data => {
 						console.log('authService.signin', data);
-						loading.dismiss();
+            loading.dismiss();
+            this.store.dispatch(new AuthActions.SignIn(form.value.email));
 						this.navCtrl.setRoot(this.homePage)
 					})
 					.catch(signInError => {
@@ -66,8 +79,11 @@ export class SignInPage {
           this.authService.credentialSignIn(response.authResponse.accessToken)
             .then(data => {
               console.log('onFacebookSignup success', data);
+              this.store.dispatch(new AuthActions.FacebookLogin({
+                email: data.user.email,
+                token: data.credential.accessToken
+              }));
               this.userProfile = data;
-              this.navCtrl.setRoot(this.homePage);
             })
             .catch(error => {
               const alert = this.alertCtrl.create({
@@ -96,6 +112,11 @@ export class SignInPage {
           console.log('onFacebookSignup error', error);
         });
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   }
 
 }

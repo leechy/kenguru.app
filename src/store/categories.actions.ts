@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Category } from "../reducers/categories";
+import { CategoryInterface } from "../models/category.interface";
 
 export const UPDATE = "UPDATE";
 export const RESET = "RESET";
@@ -10,27 +10,27 @@ export const TOGGLE_EXPANSION = "TOGGLE_EXPANSION";
 
 export class Update implements Action {
   readonly type = UPDATE;
-  constructor(public payload: Category) {}
+  constructor(public payload: CategoryInterface[]) {}
 }
 
 export class Push implements Action {
   readonly type = PUSH;
-  constructor(public payload: Category) {}
+  constructor(public payload: CategoryInterface) {}
 }
 
 export class Expand implements Action {
   readonly type = EXPAND;
-  constructor(public payload: Category) {}
+  constructor(public payload: CategoryInterface) {}
 }
 
 export class Collapse implements Action {
   readonly type = COLLAPSE;
-  constructor(public payload: Category) {}
+  constructor(public payload: CategoryInterface) {}
 }
 
 export class ToggleExpansion implements Action {
   readonly type = TOGGLE_EXPANSION;
-  constructor(public payload: Category) {}
+  constructor(public payload: CategoryInterface) {}
 }
 
 export class Reset implements Action {

@@ -8,9 +8,8 @@ import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 
 import { Store } from "@ngrx/store";
-import * as CategoryActions from "./../../actions/category";
-import { AppState } from './../../reducers/categories';
-import { Observable } from "rxjs/Observable";
+import * as CategoryActions from "../../store/categories.actions";
+import { AppState } from '../../models/app-state.interface';
 
 
 @Component({

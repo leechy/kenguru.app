@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 import { AuthService } from '../services/auth';
 import { SettingsService } from '../services/settings';
+import { Observable } from "rxjs/Observable";
 
 import { HomePage } from '../pages/home/home';
 import { CategoryPage } from '../pages/category/category';
@@ -13,25 +14,26 @@ import { SignInPage } from '../pages/sign-in/sign-in';
 import { SearchPage } from '../pages/search/search';
 
 import { Store } from "@ngrx/store";
-import * as CategoryActions from "./../actions/category";
-import { AppState } from './../reducers/categories';
-import { Observable } from "rxjs/Observable";
+import * as CategoryActions from "../store/categories.actions";
+import { AppState } from '../models/app-state.interface';
+import { AuthInterface } from '../models/auth.interface';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit {
   rootPage:any = HomePage;
   categoryPage:any = CategoryPage;
   searchPage:any = SearchPage;
   settingsPage:any = SettingsPage;
   signInPage:any = SignInPage;
-  isAuthenticated = false;
-  userEmail: string = '';
+
   @ViewChild('nav') nav: NavController;
 
   categories: any[] = [];
   categories$: Observable<any>;
+  authState$: Observable<AuthInterface>;
 
   constructor(
     platform: Platform,
@@ -48,10 +50,9 @@ export class MyApp {
     });
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.userEmail = user.email;
-        this.isAuthenticated = true;
+        this.store.dispatch(new AuthActions.SignIn(user.email));
       } else {
-        this.isAuthenticated = false;
+        this.store.dispatch(new AuthActions.Logout());
       }
     });
 
@@ -66,6 +67,10 @@ export class MyApp {
     this.categories$.subscribe(values => {
       this.categories = values;
     })
+  }
+
+  ngOnInit() {
+    this.authState$ = this.store.select('auth');
   }
 
   setRoot(evt: any, page: any, category?: any) {

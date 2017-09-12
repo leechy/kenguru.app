@@ -5,44 +5,48 @@
 				<ion-icon name="menu"></ion-icon>
 			</button>
 		</ion-buttons>
-		<ion-title>Регистрация и вход</ion-title>
+		<ion-title>Регистрация за томболата</ion-title>
 	</ion-navbar>
 </ion-header>
 
 
 <ion-content>
 
-	<h2 class="category-title">С помоща на друга служба</h2>
-	<p margin class="explanation">Ако вече сте се регистрирали в някоя от тези служби, то можете да използвате тези регистрации, за да не създавате още една регистрация и да не помните още една парола.</p>
+	<h2 class="category-title">Томбола</h2>
 
-	<div padding>
-		<button ion-button block color="facebookbtn" (click)="onFacebookSignup()">
-			<ion-icon name="logo-facebook"></ion-icon>
-			&nbsp;Фейсбук
-		</button>
-		<button ion-button block color="googlebtn">
-			<ion-icon name="logo-google"></ion-icon>
-			&nbsp;Гугъл
-		</button>
-	</div>
-
-
-	<h2 class="category-title">С електронна поща</h2>
-	<p margin class="explanation">Просто въведете адреса на електронната си поща и желаемата парола. На този пощенски адрес ще получавате писма, ако сте спечелили някакви награди и подаръци.</p>
-
-	<form #f="ngForm" (ngSubmit)="onSignup(f)">
-		<ion-list  no-margin>
-			<ion-item>
-				<ion-label stacked color="primary">Електронна поща</ion-label>
-				<ion-input type="email" name="email" ngModel required></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label stacked color="primary">Парола</ion-label>
-				<ion-input type="password" name="password" ngModel required [minlength]="6"></ion-input>
-			</ion-item>
-		</ion-list>
-		<div padding>
-			<button ion-button block type="submit" [disabled]="!f.valid">Влез</button>
+	<ng-container *ngIf="(authState$ | async).authenticated">
+		<p margin class="explanation">
+			Вие вече участвате в томболата с адрес:<br/>
+			<span class="email-address">{{ (authState$ | async).userEmail }}</span>
+			<button class="logout-button" ion-button (click)="logout()">Това не е моят адрес</button>
+		</p>
+	</ng-container>
+	<ng-container *ngIf="!(authState$ | async).authenticated">
+		<p margin class="explanation">Ако искате да участвате в томболата, където всеки месец
+			разиграваме награди, трябва да си оставите адреса на електронната си поща (и да го
+			защитите с парола, за да ви познаем следващия път).</p>
+		<form #f="ngForm" (ngSubmit)="onSignup(f)">
+			<ion-list  no-margin>
+				<ion-item>
+					<ion-label stacked color="primary">Електронна поща</ion-label>
+					<ion-input type="email" name="email" ngModel required></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label stacked color="primary">Парола</ion-label>
+					<ion-input type="password" name="password" ngModel required [minlength]="6"></ion-input>
+				</ion-item>
+			</ion-list>
+			<div padding>
+				<button ion-button block type="submit" [disabled]="!f.valid">Участвам</button>
+			</div>
+		</form>
+		<p margin class="explanation">Или просто да влезете през своя акаунт в Фейсбук:</p>
+		<div margin>
+			<button ion-button block color="facebookbtn" (click)="onFacebookSignup()">
+				<ion-icon name="logo-facebook"></ion-icon>
+				&nbsp;Участвай с Фейсбук
+			</button>
 		</div>
-	</form>
+	</ng-container>
+
 </ion-content>

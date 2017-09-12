@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth';
 import { SettingsService } from '../services/settings';
 
 import { StoreModule } from "@ngrx/store";
-import { ROOT_REDUCER } from './../reducers/reducers';
+import { reducers } from './../store/reducers';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -38,7 +38,7 @@ import { SignInPage } from '../pages/sign-in/sign-in';
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    StoreModule.forRoot(ROOT_REDUCER)
+    StoreModule.forRoot(reducers)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
