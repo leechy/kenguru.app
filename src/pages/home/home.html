@@ -26,10 +26,17 @@
     </ion-refresher-content>
   </ion-refresher>
 
-	<div>
-		Дата на раждане на бебето: {{ birthDate }}<br>
-		Деца: <span *ngFor="let child of children">{{ child.birthDate }}</span>
-	</div>
+  <!-- Персонални категории: <span *ngFor="let tag of personalTags">{{ tag }} </span> -->
+	<div *ngIf="personalPosts.length">
+      <h2 class="category-title">Статии, подбрани за вас</h2>
+
+      <ion-scroll scrollX="true">
+        <ion-card *ngFor="let post of personalPosts" [navPush]="postPage" [navParams]="post">
+          <div class="card-image" *ngIf="post._embedded['wp:featuredmedia']" [ngStyle]="{ 'background-image': 'url(' + post._embedded['wp:featuredmedia'][0].source_url + ')' }"></div>
+          <div class="card-title" [innerHTML]="post.title.rendered"></div>
+        </ion-card>
+      </ion-scroll>
+  </div>
 
   <div *ngFor="let category of categories">
 

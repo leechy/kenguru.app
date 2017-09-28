@@ -32,6 +32,8 @@ export class CategoryPage implements OnInit {
   ngOnInit() {
     this.category = this.navParams.data;
 
+    
+
     this.http.get(this.postsUrl + this.category.id)
       .map(res => res.json())
       .subscribe(data => {

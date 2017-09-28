@@ -15,23 +15,26 @@ import { reducers } from './../store/reducers';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { PostPage } from '../pages/post/post';
+import { PostPage, PostPopover } from '../pages/post/post';
 import { CategoryPage } from '../pages/category/category';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { ChildPage } from '../pages/child/child';
 import { SignInPage } from '../pages/sign-in/sign-in';
+import { TourPage } from '../pages/tour/tour';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     PostPage,
+    PostPopover,
     CategoryPage,
     SearchPage,
     SettingsPage,
     ChildPage,
-    SignInPage
+    SignInPage,
+    TourPage
   ],
   imports: [
     BrowserModule,
@@ -45,11 +48,13 @@ import { SignInPage } from '../pages/sign-in/sign-in';
     MyApp,
     HomePage,
     PostPage,
+    PostPopover,
     CategoryPage,
     SearchPage,
     SettingsPage,
     ChildPage,
-    SignInPage
+    SignInPage,
+    TourPage
   ],
   providers: [
     StatusBar,

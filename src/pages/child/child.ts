@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SettingsService } from '../../services/settings';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { AppState } from '../../models/app-state.interface';
+import { SettingsInterface, ChildrenInterface } from '../../models/settings.interface';
 
 @Component({
   selector: 'page-child',
   templateUrl: 'child.html',
 })
-export class ChildPage {
+export class ChildPage implements OnInit, OnDestroy {
 
   // dates
   eighteenYearsAgo: Date = new Date();
@@ -14,29 +19,37 @@ export class ChildPage {
 
   // model
   childNo: number = -1;
-  child: any = {
-    name: '',
+  child: ChildrenInterface = {
+    name: null,
     birthDate: ''
   };
-
+  settingsState$: Observable<SettingsInterface>;
+  settingsSubscription: Subscription;
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private store: Store<AppState>
   ) {
     this.eighteenYearsAgo.setFullYear(this.eighteenYearsAgo.getFullYear() - 18);
   }
 
   ngOnInit() {
-    if (this.navParams.data || this.navParams.data == 0) {
-      this.childNo = this.navParams.data;
-      if (this.childNo >= 0) {
-        this.child = this.settingsService.getChildDataByNo(this.childNo);
+    this.childNo = (this.navParams.data || this.navParams.data == 0)? this.navParams.data : -1;
+    this.settingsState$ = this.store.select('settings');
+    this.settingsSubscription = this.settingsState$.subscribe((settings: SettingsInterface) => {
+      if (settings.children[this.childNo]) {
+        this.child = settings.children[this.childNo];
       }
-    } else {
-      this.childNo = -1;
-    }
+    });
     console.log('this.childNo', this.childNo);
+  }
+
+  ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
   }
 
   saveChild() {

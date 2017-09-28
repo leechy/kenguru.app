@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import { AuthService } from '../services/auth';
 import { SettingsService } from '../services/settings';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 import { HomePage } from '../pages/home/home';
 import { CategoryPage } from '../pages/category/category';
@@ -22,7 +23,7 @@ import * as AuthActions from '../store/auth.actions';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp implements OnInit {
+export class MyApp implements OnInit, OnDestroy {
   rootPage:any = HomePage;
   categoryPage:any = CategoryPage;
   searchPage:any = SearchPage;
@@ -33,6 +34,7 @@ export class MyApp implements OnInit {
 
   categories: any[] = [];
   categories$: Observable<any>;
+  categoriesSubscription: Subscription;
   authState$: Observable<AuthInterface>;
 
   constructor(
@@ -48,13 +50,6 @@ export class MyApp implements OnInit {
       apiKey: "AIzaSyDJaLK-z6TL2c3tn_PJrKlR_fKNU3iofBY",
       authDomain: "kenguruapp.firebaseapp.com"
     });
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.store.dispatch(new AuthActions.SignIn(user.email));
-      } else {
-        this.store.dispatch(new AuthActions.Logout());
-      }
-    });
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -63,14 +58,28 @@ export class MyApp implements OnInit {
       splashScreen.hide();
     });
 
+  }
+
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.store.dispatch(new AuthActions.SignIn(user.email));
+      } else {
+        this.store.dispatch(new AuthActions.Logout());
+      }
+    });
+
+    this.authState$ = this.store.select('auth');
     this.categories$ = this.store.select<any>("categories");
-    this.categories$.subscribe(values => {
+    this.categoriesSubscription = this.categories$.subscribe(values => {
       this.categories = values;
     })
   }
 
-  ngOnInit() {
-    this.authState$ = this.store.select('auth');
+  ngOnDestroy() {
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
+    }
   }
 
   setRoot(evt: any, page: any, category?: any) {

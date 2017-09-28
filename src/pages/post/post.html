@@ -4,15 +4,15 @@
 			<div class="toolbar--title"></div>
 		</ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only [navPush]="searchPage">
-				<ion-icon name="search"></ion-icon>
-			</button>
+			<button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
 		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-	<div class="content-width" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem'}">
+	<div class="content-width" [ngStyle]="{'font-size': (1.4 + (textSize * 0.1)) + 'rem'}">
 		<img *ngIf="post._embedded['wp:featuredmedia']" src="{{ post._embedded['wp:featuredmedia'][0].source_url }}" />
 		<h1 [innerHtml]="post.title.rendered"></h1>
 		<div [innerHtml]="post.content.rendered"></div>

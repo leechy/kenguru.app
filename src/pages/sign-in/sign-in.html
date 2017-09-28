@@ -1,18 +1,11 @@
 <ion-header>
 	<ion-navbar>
-		<ion-buttons start>
-			<button ion-button icon-only menuToggle>
-				<ion-icon name="menu"></ion-icon>
-			</button>
-		</ion-buttons>
 		<ion-title>Регистрация за томболата</ion-title>
 	</ion-navbar>
 </ion-header>
 
 
 <ion-content>
-
-	<h2 class="category-title">Томбола</h2>
 
 	<ng-container *ngIf="(authState$ | async).authenticated">
 		<p margin class="explanation">
@@ -44,7 +37,7 @@
 		<div margin>
 			<button ion-button block color="facebookbtn" (click)="onFacebookSignup()">
 				<ion-icon name="logo-facebook"></ion-icon>
-				&nbsp;Участвай с Фейсбук
+				&nbsp; &nbsp; Участвай с Фейсбук
 			</button>
 		</div>
 	</ng-container>

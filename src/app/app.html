@@ -7,7 +7,6 @@
 	<ion-content>
 		<ion-list>
 			<button ion-item (click)="setRoot($event, settingsPage)">Профил</button>
-			<button ion-item (click)="setRoot($event, signInPage)">Регистрация и вход</button>
 
 			<button ion-item (click)="setRoot($event, rootPage)">Корица</button>
 			<ng-container *ngFor="let category of categories[0]">
@@ -17,10 +16,12 @@
 					<ion-note item-end>{{ category.count }}</ion-note>
 				</button>
 				<ng-container *ngIf="categories[category.id] && category.expanded">
-					<button ion-item class="subcatitem" *ngFor="let subcategory of categories[category.id]" (click)="setRoot($event, categoryPage, subcategory)">
-						{{ subcategory.name }}
-						<ion-note item-end>{{ subcategory.count }}</ion-note>
-					</button>
+					<ng-container *ngFor="let subcategory of categories[category.id]">
+							<button *ngIf="subcategory.count" ion-item class="subcatitem" (click)="setRoot($event, categoryPage, subcategory)">
+									{{ subcategory.name }}
+									<ion-note item-end>{{ subcategory.count }}</ion-note>
+								</button>
+					</ng-container>
 				</ng-container>
 			</ng-container>
 

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start showWhen="ios">
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary">Затвори</span>
+      </button>
+    </ion-buttons>
+    <ion-title>Добре дошли!</ion-title>
+    <ion-buttons end showWhen="android,windows">
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-slides pager>
+    <ion-slide>
+      <h2>Добре дошли в новото приложение на Списание Кенгуру</h2>
+      <p>Тук ще намерите голяма част от статиите, публикувани за последните 10 години.</p>
+      <p>Разрешете ни да ви покажем набързо как да работите с приложението най-добре.</p>
+      <p><button ion-button clear large icon-end color="primary">Покажете къде какво е...</button></p>
+      <br>
+      <p><button ion-button clear large icon-end color="primary">
+        Пропусни
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
+    </ion-slide>
+    <ion-slide>
+      <h2>Избор на статия на корицата</h2>
+      <p>Всяка категория, представена на корицата (главната страница) има много статии, които може да бъдат открити
+        изтегляйки ги наляво с пръст.</p>
+      <p>Ако сред последните десет няма търсената от вас статия, можете да изберете линка „Всички“ напротив названието на категорията и ще попаднете в списъка със всички статии в категорията.</p>
+    </ion-slide>
+      
+  </ion-slides>
+
+</ion-content>

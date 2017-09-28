@@ -5,12 +5,24 @@
 				<ion-icon name="menu"></ion-icon>
 			</button>
 		</ion-buttons>
-		<ion-title>Настройки</ion-title>
+		<ion-title>Профил</ion-title>
 	</ion-navbar>
 </ion-header>
 
 
 <ion-content>
+
+	<h2 class="category-title">Томбола</h2>
+
+	<p margin class="explanation">За участие в томболата, където всеки месец разиграваме награди, трябва да оставите адреса си за връзка:</p>
+	<p margin>
+		<button ion-button block outline [navPush]="signInPage">
+			<ion-label *ngIf="(this.authState$ | async).authenticated">{{ (this.authState$ | async).userEmail }}</ion-label>
+			<ion-label *ngIf="!(this.authState$ | async).authenticated">Оставете електронния си адрес...</ion-label>
+		</button>
+	</p>
+
+	<br>
 
 	<h2 class="category-title">Персонализация</h2>
 	<p margin class="explanation">Ако укажете кога очаквате бебето&nbsp;си, всяка седмица ще&nbsp;обновяваме съдържанието за&nbsp;вас и&nbsp;ще следим бременността&nbsp;ви, обяснявайки какво да&nbsp;очаквате.</p>
@@ -54,20 +66,5 @@
 			<ion-note>Няма деца</ion-note>
 		</ion-item>
 	</ion-list>
-
-
-	<h2 class="category-title">Четене</h2>
-
-	<ion-list>
-		<ion-list-header>Размер на текста</ion-list-header>
-		<ion-item>
-			<ion-range min="0" max="10" step="2" snaps="true" value="6" [(ngModel)]="textSize" (ionChange)="onTextSizeChange($event)">
-				<ion-label range-left class="small-text">A</ion-label>
-				<ion-label range-right class="large-text">A</ion-label>
-			</ion-range>
-		</ion-item>
-	</ion-list>
-
-	<p margin class="text-size-demo" [ngStyle]="{'font-size': (1.6 + (textSize * 0.1)) + 'rem', 'line-height': (2 + (textSize * 0.15)) + 'rem'}">Този абзац е&nbsp;пример за&nbsp;това, какъв ще&nbsp;бъде размера на&nbsp;шрифта в&nbsp;статиите. С&nbsp;помощта на&nbsp;указателя отгоре, можете да&nbsp;промените размера на&nbsp;текста, за&nbsp;да&nbsp; намерите размера, при&nbsp;който ще&nbsp;четете най-комфортно на&nbsp;вашето устройство.</p>
 
 </ion-content>

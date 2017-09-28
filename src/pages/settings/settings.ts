@@ -1,20 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SettingsService } from '../../services/settings';
 
-import { ChildPage } from '../child/child'
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from "@ngrx/store";
+import { AppState } from '../../models/app-state.interface';
+import { SettingsInterface } from '../../models/settings.interface';
+import { AuthInterface } from '../../models/auth.interface';
+
+import { ChildPage } from '../child/child';
+import { SignInPage } from '../sign-in/sign-in';
 
 @Component({
 	selector: 'page-settings',
 	templateUrl: 'settings.html',
 })
-export class SettingsPage {
+export class SettingsPage implements OnInit, OnDestroy {
 
 	// pages
 	childPage: any = ChildPage;
+	signInPage: any = SignInPage;
 
 	// settings
-	textSize: number = 6;
 	isPregnant: boolean = false;
 	birthDate: string = null;
 	children: any[] = [];
@@ -23,33 +31,36 @@ export class SettingsPage {
 	yesterday: Date = new Date();
 	fourtyWeeksFromToday: Date = new Date();
 
+	settingsState$: Observable<SettingsInterface>;
+  settingsSubscription: Subscription;
+  authState$: Observable<AuthInterface>;
+	
 	constructor(
 		public navCtrl: NavController,
 		public navParams: NavParams,
-		private settingsService: SettingsService
+		private settingsService: SettingsService,
+		private store: Store<AppState>
 	) {
 		this.yesterday.setDate(-1);
 		this.fourtyWeeksFromToday.setDate(this.yesterday.getDate() + 265);
 	}
 
-	//
-	ionViewDidEnter() {
-		this.textSize = this.settingsService.getTextSize();
-		this.birthDate = this.settingsService.getBirthDate();
-		if (this.birthDate) this.isPregnant = true;
-		this.children = this.settingsService.getChildren();
+	// get data from store
+	ngOnInit() {
+    this.settingsState$ = this.store.select('settings');
+    this.settingsSubscription = this.settingsState$.subscribe(settings => {
+			this.birthDate = settings.birthDate;
+			if (this.birthDate) this.isPregnant = true;
+			this.children = settings.children;
+		});
+		this.authState$ = this.store.select('auth');
 	}
 
-	// update data in SettingsService from Storage for other pages
-	// (there can be problems with isPregnant switch)
-	ionViewWillLeave() {
-		this.settingsService.updateValuesFromStorage();
-	}
-
-	// saving text size
-	onTextSizeChange(event) {
-		this.settingsService.setTextSize(event.value);
-	}
+	ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
+  }
 
 	onBirthDateChange() {
 		if (this.isPregnant && this.birthDate) {
