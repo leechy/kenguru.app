@@ -44,10 +44,24 @@ ion-menu .item-inner > ion-icon[small]:first-child {
 	margin: -16px 0px -16px -16px;
 	padding: 14px 10px 14px 18px;
 }
+/*
+ion-menu .scroll-content {
+  display: flex;
+	align-items: stretch;
+  flex-direction: column;
+}
 
-.list-md,
-.list-wp,
-.list-ios {
+.menu-stretcher {
+  flex: 1;
+}
+*/
+
+ion-menu .list-md,
+ion-menu .list-wp,
+ion-menu .list-ios {
+  /* width: 100%; */
+  margin-bottom: 0;
+
 	.item-block {
 		&.catitem .item-inner {
 			padding-left: 16px;
@@ -56,6 +70,14 @@ ion-menu .item-inner > ion-icon[small]:first-child {
 			margin-left: 56px;
 		}
 	}
+}
+
+
+/* Common layout */
+
+.content-width {
+  margin: 0 auto;
+  max-width: #{600px - 2 * $content-padding};
 }
 
 

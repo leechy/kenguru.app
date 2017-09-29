@@ -5,7 +5,7 @@
         <span ion-text color="primary">Затвори</span>
       </button>
     </ion-buttons>
-    <ion-title>Добре дошли!</ion-title>
+    <ion-title>Помощник</ion-title>
     <ion-buttons end showWhen="android,windows">
       <button ion-button (click)="dismiss()">
         <ion-icon name="md-close"></ion-icon>
@@ -21,8 +21,11 @@
     <ion-slide>
       <h2>Добре дошли в новото приложение на Списание Кенгуру</h2>
       <p>Тук ще намерите голяма част от статиите, публикувани за последните 10 години.</p>
-      <p>Разрешете ни да ви покажем набързо как да работите с приложението най-добре.</p>
-      <p><button ion-button clear large icon-end color="primary">Покажете къде какво е...</button></p>
+      <p>Разрешете ни да ви покажем набързо как да работите с приложението най-лесно.</p>
+      <p><button ion-button clear large icon-end color="primary">
+        Разкажете подробно
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
       <br>
       <p><button ion-button clear large icon-end color="primary">
         Пропусни
@@ -31,11 +34,47 @@
     </ion-slide>
     <ion-slide>
       <h2>Избор на статия на корицата</h2>
-      <p>Всяка категория, представена на корицата (главната страница) има много статии, които може да бъдат открити
-        изтегляйки ги наляво с пръст.</p>
-      <p>Ако сред последните десет няма търсената от вас статия, можете да изберете линка „Всички“ напротив названието на категорията и ще попаднете в списъка със всички статии в категорията.</p>
+      <p>Всяка рубрика, представена на корицата (главната страница) има много статии, които може да бъдат открити изтегляйки ги наляво с пръст.</p>
+      <p>Ако сред последните десет няма търсената от вас статия, можете да изберете линка „Всички“ напротив названието и ще попаднете в списъка със всички статии в рубриката.</p>
+      <p><button ion-button clear large icon-end color="primary">
+        Къде е менюто
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
     </ion-slide>
-      
+    <ion-slide> 
+      <h2>Меню</h2>
+      <p>Натискайки иконката в горния ляв ъгъл или изтегляйки от лявия край на екрана, ще видите нашето меню. В него са събрани всички рубрики и подрубрики (които можете да разкриете, натискайки стрелката надлу) и срещу всяка от тях е показан броя на статиите.</p>
+      <p>Чрез менюто, също така, можете да стигнете и до своя профил.</p>
+      <p><button ion-button clear large icon-end color="primary">
+        Статии
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
+    </ion-slide>
+    <ion-slide>
+      <h2>Статии</h2>
+      <p>Нищо особенно интересно. Можете да промените размера на шрифта през менюто, което се отваря в горния десен ъгъл.</p>
+      <p><button ion-button clear large icon-end color="primary">
+        Търсене
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
+    </ion-slide>
+    <ion-slide>
+      <h2>Търсене</h2>
+      <p>В горния десен ъгъл на всяка една страница (в статиите има пункт в менюто) има иконка с формата на лупа. Натискайки я, попадате на страницата за търсене на статии.</p>
+      <p>Със всяка една добавена буква, ще търсим за по-точно отговарящи на вашето запитване статии.</p>
+      <p><button ion-button clear large icon-end color="primary">
+        Профил
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button></p>
+    </ion-slide>
+    <ion-slide>
+      <h2>Профил</h2>
+      <p></p>
+      <p><button ion-button clear large icon-end color="primary">
+        Затвори помощника
+      </button></p>
+    </ion-slide>
+                          
   </ion-slides>
 
 </ion-content>

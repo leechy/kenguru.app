@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
 import { App, ViewController, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { SettingsService } from '../../services/settings';
 
@@ -65,11 +66,14 @@ export class PostPage implements OnInit {
   post: any;
   textSize: number = 4;
 
+  postUrl = 'https://kenguruapp.online/wp-json/wp/v2/posts/';
+
   settingsState$: Observable<SettingsInterface>;
   settingsSubscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
+    private http: Http,
     private popoverCtrl: PopoverController,
     public navParams: NavParams,
     private store: Store<AppState>
@@ -78,7 +82,17 @@ export class PostPage implements OnInit {
   }
 
   ngOnInit() {
-    this.post = this.navParams.data;
+    if (this.navParams.data.type) {
+      this.post = this.navParams.data;
+    } else if (this.navParams.data.id && !isNaN(this.navParams.data.id)) {
+      let postId = this.navParams.data.id
+      // we need to load the post from API
+      this.http.get(this.postUrl + postId + '?_embed')
+        .map(res => res.json())
+        .subscribe(data => {
+          this.post = data;
+        });
+    }
     this.settingsState$ = this.store.select('settings');
     this.settingsSubscription = this.settingsState$.subscribe(settings => {
       this.textSize = settings.textSize;

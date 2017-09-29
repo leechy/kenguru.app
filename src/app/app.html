@@ -6,8 +6,6 @@
 	</ion-header>
 	<ion-content>
 		<ion-list>
-			<button ion-item (click)="setRoot($event, settingsPage)">Профил</button>
-
 			<button ion-item (click)="setRoot($event, rootPage)">Корица</button>
 			<ng-container *ngFor="let category of categories[0]">
 				<button ion-item (tap)="setRoot($event, categoryPage, category)">
@@ -24,7 +22,12 @@
 					</ng-container>
 				</ng-container>
 			</ng-container>
-
+<!--
+		</ion-list>
+		<div class="menu-stretcher"></div>
+		<ion-list>
+-->
+			<button ion-item (click)="setRoot($event, settingsPage)">Профил</button>
 		</ion-list>
 	</ion-content>
 </ion-menu>

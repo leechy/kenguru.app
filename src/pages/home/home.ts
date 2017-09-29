@@ -30,6 +30,7 @@ export class HomePage implements OnInit, OnDestroy {
   categories: any[] = [];
 
   postsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&categories=';
+  promosUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/promo?_embed&categories=';
   posts: any[] = [];
 
   settingsState$: Observable<SettingsInterface>;
@@ -39,9 +40,9 @@ export class HomePage implements OnInit, OnDestroy {
   personalTags: string[] = [];
   year: number = 1000 * 60 * 60 * 24 * 365;
 
-  tagsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/tags?per_page=100';
+  tagsUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/tags?per_page=100';
   tags: any[] = [];
-  personalPostsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&tags=';
+  personalPostsUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/posts?_embed&tags=';
   personalPosts: any[] = [];
 
   constructor(
@@ -50,8 +51,7 @@ export class HomePage implements OnInit, OnDestroy {
     public loadingCtrl: LoadingController,
     private store: Store<AppState>,
     public modalCtrl: ModalController
-  ) {
-  }
+  ) {}
 
   presentModal() {
     let modal = this.modalCtrl.create(TourPage);
@@ -66,51 +66,76 @@ export class HomePage implements OnInit, OnDestroy {
       // determine pregnancy week
       if (settings.birthDate) {
         let expectedBirthDate = new Date(settings.birthDate);
-        let checkdate = new Date();
-        if (expectedBirthDate > checkdate) {
+        let weekCheckdate = new Date();
+        if (expectedBirthDate > weekCheckdate) {
           // the baby is not yet born, but we need to check for the
           // actual birth after 39 week ask is baby really still inside?
           // if not — ask for the name and set as a child
           for (let i = 0; i < 40; i++) {
-            checkdate.setDate(checkdate.getDate() + 7);
-            if (checkdate > expectedBirthDate) {
+            weekCheckdate.setDate(weekCheckdate.getDate() + 7);
+            if (weekCheckdate > expectedBirthDate) {
               this.personalTags.push(`pregnant-${40 - i}w`);
               break;
             }
           }
-  
+
+          // calculating additionally pregnancy month
+          let monthCheckdate = new Date();
+          for (let i = 0; i < 9; i++) {
+            monthCheckdate.setMonth(monthCheckdate.getMonth() + 1);
+            if (monthCheckdate > expectedBirthDate) {
+              this.personalTags.push(`pregnant-${9 - i}m`);
+              break;
+            }
+          }
+
         } else {
           // the due date is passed
           // what to do?
         }
       }
 
-      // determine the age of every child
+      // determine the age group of every child
       settings.children.forEach((child) => {
         let childBirthday = new Date(child.birthDate);
-        let checkdate = new Date();
         
-        if (checkdate.getTime() - childBirthday.getTime() < this.year) {
-          // if the child is less than one year old — calculate months
-          for (let i = 0; i < 13; i++) {
-            checkdate.setMonth(checkdate.getMonth() - 1);
-            if (checkdate < childBirthday) {
-              this.personalTags.push(`age-${i}m`);
-              break;
-            }
+        // calculate weeks
+        let weekCheckdate = new Date();
+        let week = 0;
+        while (weekCheckdate > childBirthday) {
+          weekCheckdate.setDate(weekCheckdate.getDate() - 7);
+          if (weekCheckdate < childBirthday) {
+            this.personalTags.push(`age-${week}w`);
           }
-        } else {
-          // if the child is older than one year — calculate years
-          for (let i = 0; i < 18; i++) {
-            checkdate.setFullYear(checkdate.getFullYear() - 1);
-            if (checkdate < childBirthday) {
-              this.personalTags.push(`age-${i}y`);
-              break;
-            }
-          }
+          week++;
         }
+
+        // calculate months
+        let monthCheckdate = new Date();
+        let month = 0;
+        while (monthCheckdate > childBirthday) {
+          monthCheckdate.setMonth(monthCheckdate.getMonth() - 1);
+          if (monthCheckdate < childBirthday) {
+            this.personalTags.push(`age-${month}m`);
+          }
+          month++;
+        }
+
+        // calculate years
+        let yearCheckdate = new Date();
+        let year = 0;
+        while (yearCheckdate > childBirthday) {
+          yearCheckdate.setFullYear(yearCheckdate.getFullYear() - 1);
+          if (yearCheckdate < childBirthday) {
+            this.personalTags.push(`age-${year}y`);
+          }
+          year++;
+        }
+
       });
 
+      console.log('personalTags', this.personalTags);
+      
       this.updatePersonalCategory();
     });
 
@@ -158,9 +183,11 @@ export class HomePage implements OnInit, OnDestroy {
         // retrieve posts in each category
         this.categories.forEach(category => {
           if (category.slug != 'uncategorized') {
-            this.store.dispatch(new CategoryActions.Push(category));
+            if (category.slug.indexOf('promo') < 0) {
+              this.store.dispatch(new CategoryActions.Push(category));
+            }
             if (category.parent == 0) {
-              this.loadArticlesByCatId(category.id)
+              this.loadArticlesByCatId(category.id, category.slug.indexOf('promo') > -1);
             }
           }
         });
@@ -168,8 +195,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   }
 
-  loadArticlesByCatId(categoryId) {
-    this.http.get(this.postsUrl + categoryId)
+  loadArticlesByCatId(categoryId, isPromo) {
+    const url = (isPromo)? this.promosUrl : this.postsUrl;
+    this.http.get(url + categoryId)
       .map(res => res.json())
       .subscribe(data => {
         this.posts[categoryId] = data;

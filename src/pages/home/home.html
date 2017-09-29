@@ -41,18 +41,38 @@
   <div *ngFor="let category of categories">
 
     <section *ngIf="category.slug != 'uncategorized' && category.count && category.parent == 0">
-      <button ion-button small clear float-right (click)="navCtrl.setRoot(categoryPage, category)">всички</button>
-      <h2 class="category-title">{{ category.name | uppercase }}</h2>
+      <!-- Categories -->
+      <ng-container *ngIf="category.slug.indexOf('promo') < 0">
+        <button ion-button small clear float-right (click)="navCtrl.setRoot(categoryPage, category)">всички</button>
+        <h2 class="category-title">{{ category.name | uppercase }}</h2>
 
-      <ion-scroll scrollX="true">
-        <ion-card *ngFor="let post of posts[category.id]" [navPush]="postPage" [navParams]="post">
-          <div class="card-image" *ngIf="post._embedded['wp:featuredmedia']" [ngStyle]="{ 'background-image': 'url(' + post._embedded['wp:featuredmedia'][0].source_url + ')' }"></div>
-          <div class="card-title" [innerHTML]="post.title.rendered"></div>
-        </ion-card>
-      </ion-scroll>
+        <ion-scroll scrollX="true">
+          <ion-card *ngFor="let post of posts[category.id]" [navPush]="postPage" [navParams]="post">
+            <div class="card-image" *ngIf="post._embedded['wp:featuredmedia']" [ngStyle]="{ 'background-image': 'url(' + post._embedded['wp:featuredmedia'][0].source_url + ')' }"></div>
+            <div class="card-title" [innerHTML]="post.title.rendered"></div>
+          </ion-card>
+        </ion-scroll>
+      </ng-container>
 
+      <!-- Advertising -->
+      <ng-container *ngIf="category.slug.indexOf('promo') >= 0">
+        <ion-slides pager>
+          <ion-slide *ngFor="let promo of posts[category.id]">
+
+            <ng-container *ngIf="promo['post-meta-fields']['_wpcf_belongs_post_id']">
+                <img src="{{ promo['post-meta-fields']['wpcf-promo-image'] }}" [navPush]="postPage" [navParams]="{ id: promo['post-meta-fields']['_wpcf_belongs_post_id'][0] }">
+            </ng-container>
+            <ng-container *ngIf="promo['post-meta-fields']['wpcf-promo-url']">
+              <a href="{{ promo['post-meta-fields']['wpcf-promo-url'] }}" target="_blank">
+                <img src="{{ promo['post-meta-fields']['wpcf-promo-image'] }}">
+              </a>
+            </ng-container>
+
+          </ion-slide>
+        </ion-slides>
+      </ng-container>
     </section>
-
+        
   </div>
 
 </ion-content>

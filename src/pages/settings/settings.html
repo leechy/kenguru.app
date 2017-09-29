@@ -11,60 +11,62 @@
 
 
 <ion-content>
+	<div class="content-width">
 
-	<h2 class="category-title">Томбола</h2>
+		<h2 class="category-title">Томбола</h2>
 
-	<p margin class="explanation">За участие в томболата, където всеки месец разиграваме награди, трябва да оставите адреса си за връзка:</p>
-	<p margin>
-		<button ion-button block outline [navPush]="signInPage">
-			<ion-label *ngIf="(this.authState$ | async).authenticated">{{ (this.authState$ | async).userEmail }}</ion-label>
-			<ion-label *ngIf="!(this.authState$ | async).authenticated">Оставете електронния си адрес...</ion-label>
-		</button>
-	</p>
+		<p margin class="explanation">За участие в томболата, където всеки месец разиграваме награди, трябва да оставите адреса си за връзка:</p>
+		<p margin>
+			<button ion-button block outline [navPush]="signInPage">
+				<ion-label *ngIf="(this.authState$ | async).authenticated">{{ (this.authState$ | async).userEmail }}</ion-label>
+				<ion-label *ngIf="!(this.authState$ | async).authenticated">Оставете електронния си адрес...</ion-label>
+			</button>
+		</p>
 
-	<br>
+		<br>
 
-	<h2 class="category-title">Персонализация</h2>
-	<p margin class="explanation">Ако укажете кога очаквате бебето&nbsp;си, всяка седмица ще&nbsp;обновяваме съдържанието за&nbsp;вас и&nbsp;ще следим бременността&nbsp;ви, обяснявайки какво да&nbsp;очаквате.</p>
+		<h2 class="category-title">Персонализация</h2>
+		<p margin class="explanation">Ако укажете кога очаквате бебето&nbsp;си, всяка седмица ще&nbsp;обновяваме съдържанието за&nbsp;вас и&nbsp;ще следим бременността&nbsp;ви, обяснявайки какво да&nbsp;очаквате.</p>
 
-	<ion-list>
-		<ion-list-header>
-			<ion-label>Бременност</ion-label>
-			<ion-toggle [(ngModel)]="isPregnant" (ionChange)="onBirthDateChange()"></ion-toggle>
-		</ion-list-header>
-		<ion-item>
-			<ion-label>Очаквам дете на</ion-label>
-			<ion-datetime
-				[disabled]="!isPregnant"
-				displayFormat="D MMMM YYYY г."
-				pickerFormat="D MMMM YYYY"
-				min="{{ yesterday.toISOString() }}"
-				max="{{ fourtyWeeksFromToday.toISOString() }}"
-				[(ngModel)]="birthDate"
-				(ionChange)="onBirthDateChange()"
-				monthNames="януари, февруари, март, април, май, юни, юли, август, септември, октомври, ноември, декември"
-				monthShortNames="яну, фев, мар, апр, май, юни, юли, авг, сеп, окт, ное, дек"
-				cancelText="Отмяна"
-				doneText="Готово"
-			></ion-datetime>
-		</ion-item>
-	</ion-list>
+		<ion-list>
+			<ion-list-header>
+				<ion-label>Бременност</ion-label>
+				<ion-toggle [(ngModel)]="isPregnant" (ionChange)="onBirthDateChange()"></ion-toggle>
+			</ion-list-header>
+			<ion-item>
+				<ion-label>Очаквам дете на</ion-label>
+				<ion-datetime
+					[disabled]="!isPregnant"
+					displayFormat="D MMMM YYYY г."
+					pickerFormat="D MMMM YYYY"
+					min="{{ yesterday.toISOString() }}"
+					max="{{ fourtyWeeksFromToday.toISOString() }}"
+					[(ngModel)]="birthDate"
+					(ionChange)="onBirthDateChange()"
+					monthNames="януари, февруари, март, април, май, юни, юли, август, септември, октомври, ноември, декември"
+					monthShortNames="яну, фев, мар, апр, май, юни, юли, авг, сеп, окт, ное, дек"
+					cancelText="Отмяна"
+					doneText="Готово"
+				></ion-datetime>
+			</ion-item>
+		</ion-list>
 
 
-	<p margin class="explanation">Укажете колко са&nbsp;големи децата&nbsp;ви и&nbsp;всеки месец ще&nbsp;ви&nbsp;показваме статии именно за&nbsp;вас. А&nbsp;може за&nbsp;рожденните им&nbsp;дни и&nbsp;някой подарък да&nbsp;получите.</p>
+		<p margin class="explanation">Укажете рожденните дни на&nbsp; децата&nbsp;ви и&nbsp;всеки месец ще&nbsp;ви&nbsp;показваме статии именно за&nbsp;вас.</p>
 
-	<ion-list>
-		<ion-list-header>
-			Деца
-			<button ion-button outline item-end [navPush]="childPage">Добави</button>
-		</ion-list-header>
-		<button ion-item *ngFor="let child of children; let i = index" [navPush]="childPage" [navParams]="i">
-			<ion-label>{{ child.name }}</ion-label>
-			<ion-note item-end>{{ formatDate(child.birthDate) }}</ion-note>
-		</button>
-		<ion-item *ngIf="!children.length">
-			<ion-note>Няма деца</ion-note>
-		</ion-item>
-	</ion-list>
+		<ion-list>
+			<ion-list-header>
+				Деца
+				<button ion-button outline item-end [navPush]="childPage">Добави</button>
+			</ion-list-header>
+			<button ion-item *ngFor="let child of children; let i = index" [navPush]="childPage" [navParams]="i">
+				<ion-label>{{ child.name }}</ion-label>
+				<ion-note item-end>{{ formatDate(child.birthDate) }}</ion-note>
+			</button>
+			<ion-item *ngIf="!children.length">
+				<ion-note>Няма деца</ion-note>
+			</ion-item>
+		</ion-list>
 
+	</div>
 </ion-content>
