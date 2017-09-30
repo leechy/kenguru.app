@@ -1,4 +1,3 @@
-import { ShowWelcomeScreen } from './../store/settings.actions';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
