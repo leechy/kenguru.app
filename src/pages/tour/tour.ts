@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { ViewController, App } from 'ionic-angular';
+import { SettingsPage } from '../settings/settings';
+import { SettingsService } from '../../services/settings';
 
 @Component({
   selector: 'page-tour',
@@ -7,20 +9,22 @@ import { NavController, NavParams, Platform, ViewController } from 'ionic-angula
 })
 export class TourPage {
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public platform: Platform,
-    public viewCtrl: ViewController
-  ) {
-  }
+  settingsPage: any = SettingsPage;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TourPage');
-  }
+  constructor(
+    public appCtrl: App,
+		private settingsService: SettingsService,
+    private viewCtrl: ViewController
+  ) {}
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  goToSettings() {
+    this.settingsService.hideWelcomeScreen();
+    this.dismiss();
+    this.appCtrl.getRootNav().setRoot(this.settingsPage);
   }
 
 }

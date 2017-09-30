@@ -4,7 +4,8 @@ import { SettingsInterface } from '../models/settings.interface';
 const initialState: SettingsInterface = {
   textSize: 3,
   birthDate: null,
-  children: []
+  children: [],
+  welcomeScreen: true
 }
 
 export function settingsReducer(state = initialState, action: SettingsActions.All) {
@@ -50,6 +51,11 @@ export function settingsReducer(state = initialState, action: SettingsActions.Al
     return {
       ...state,
       children: children
+    }
+    case SettingsActions.IS_WELCOME_SCREEN_SHOWN:
+    return {
+      ...state,
+      welcomeScreen: action.payload
     }
   default:
     return state;

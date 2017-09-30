@@ -1,3 +1,4 @@
+import { ShowWelcomeScreen } from './../store/settings.actions';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
@@ -35,6 +36,15 @@ export class SettingsService {
         this.store.dispatch(new SettingsActions.AddChildren(val));
       }
     });
+    this.storage.get('welcome-screen').then((val) => {
+      console.log('store welcome-screen', val);
+      this.store.dispatch(new SettingsActions.IsWelcomeScreenShown(val));
+    });
+  }
+
+  hideWelcomeScreen() {
+    this.storage.set('welcome-screen', true);
+    this.store.dispatch(new SettingsActions.IsWelcomeScreenShown(true));
   }
 
   // Text Size

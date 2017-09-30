@@ -8,6 +8,7 @@ export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_CHILDREN = 'ADD_CHILDREN';
 export const UPDATE_CHILD = 'UPDATE_CHILD';
 export const REMOVE_CHILD = 'REMOVE_CHILD';
+export const IS_WELCOME_SCREEN_SHOWN = 'IS_WELCOME_SCREEN_SHOWN';
 
 export class SetTextSize implements Action {
   readonly type = SET_TEXT_SIZE;
@@ -43,4 +44,9 @@ export class RemoveChild implements Action {
   constructor(public payload: number) {}
 }
 
-export type All = SetTextSize | SetBirthDate | RemoveBirthDate | AddChildren | AddChild | UpdateChild | RemoveChild;
+export class IsWelcomeScreenShown implements Action {
+  readonly type = IS_WELCOME_SCREEN_SHOWN;
+  constructor(public payload: boolean) {}
+}
+
+export type All = SetTextSize | SetBirthDate | RemoveBirthDate | AddChildren | AddChild | UpdateChild | RemoveChild | IsWelcomeScreenShown;

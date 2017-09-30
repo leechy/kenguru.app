@@ -7,4 +7,5 @@ export interface SettingsInterface {
   textSize: number;
   birthDate: string;
   children: ChildrenInterface[];
+  welcomeScreen: boolean;
 }

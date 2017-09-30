@@ -63,7 +63,7 @@
                 <img src="{{ promo['post-meta-fields']['wpcf-promo-image'] }}" [navPush]="postPage" [navParams]="{ id: promo['post-meta-fields']['_wpcf_belongs_post_id'][0] }">
             </ng-container>
             <ng-container *ngIf="promo['post-meta-fields']['wpcf-promo-url']">
-              <a href="{{ promo['post-meta-fields']['wpcf-promo-url'] }}" target="_blank">
+              <a href="{{ promo['post-meta-fields']['wpcf-promo-url'] }}" target="_system">
                 <img src="{{ promo['post-meta-fields']['wpcf-promo-image'] }}">
               </a>
             </ng-container>

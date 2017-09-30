@@ -1,3 +1,5 @@
+import { TourPage } from './../tour/tour';
+import { IsWelcomeScreenShown } from './../../store/settings.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, LoadingController, Loading, ModalController } from 'ionic-angular';
 import { Http } from '@angular/http';
@@ -12,8 +14,10 @@ import { TourPage } from '../tour/tour';
 
 import { Store } from "@ngrx/store";
 import * as CategoryActions from "../../store/categories.actions";
+import * as SettingsActions from '../../store/settings.actions';
 import { AppState } from '../../models/app-state.interface';
 import { SettingsInterface } from '../../models/settings.interface';
+import { ShowWelcomeScreen } from '../../store/settings.actions';
 
 
 @Component({
@@ -21,16 +25,17 @@ import { SettingsInterface } from '../../models/settings.interface';
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
-
   postPage = PostPage;
   categoryPage = CategoryPage;
   searchPage = SearchPage;
+  tourPage = TourPage;
+  welcomeScreenShown = false;
 
-  categoriesUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/categories?per_page=100';
+  categoriesUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/categories?per_page=100';
   categories: any[] = [];
 
-  postsUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/posts?_embed&categories=';
-  promosUrl: string = 'http://kenguruapp.online/wp-json/wp/v2/promo?_embed&categories=';
+  postsUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/posts?_embed&categories=';
+  promosUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/promo?_embed&categories=';
   posts: any[] = [];
 
   settingsState$: Observable<SettingsInterface>;
@@ -53,101 +58,108 @@ export class HomePage implements OnInit, OnDestroy {
     public modalCtrl: ModalController
   ) {}
 
-  presentModal() {
-    let modal = this.modalCtrl.create(TourPage);
-    modal.present();
-  }
-
   ngOnInit() {
     this.settingsState$ = this.store.select('settings');
     this.settingsSubscription = this.settingsState$.subscribe(settings => {
-      this.personalTags.length = 0;
-
-      // determine pregnancy week
-      if (settings.birthDate) {
-        let expectedBirthDate = new Date(settings.birthDate);
-        let weekCheckdate = new Date();
-        if (expectedBirthDate > weekCheckdate) {
-          // the baby is not yet born, but we need to check for the
-          // actual birth after 39 week ask is baby really still inside?
-          // if not — ask for the name and set as a child
-          for (let i = 0; i < 40; i++) {
-            weekCheckdate.setDate(weekCheckdate.getDate() + 7);
-            if (weekCheckdate > expectedBirthDate) {
-              this.personalTags.push(`pregnant-${40 - i}w`);
-              break;
-            }
-          }
-
-          // calculating additionally pregnancy month
-          let monthCheckdate = new Date();
-          for (let i = 0; i < 9; i++) {
-            monthCheckdate.setMonth(monthCheckdate.getMonth() + 1);
-            if (monthCheckdate > expectedBirthDate) {
-              this.personalTags.push(`pregnant-${9 - i}m`);
-              break;
-            }
-          }
-
-        } else {
-          // the due date is passed
-          // what to do?
-        }
+      this.updatePersonalTags(settings);
+      if (!settings.welcomeScreen && !this.welcomeScreenShown) {
+        this.showWelcomeScreen();
       }
-
-      // determine the age group of every child
-      settings.children.forEach((child) => {
-        let childBirthday = new Date(child.birthDate);
-        
-        // calculate weeks
-        let weekCheckdate = new Date();
-        let week = 0;
-        while (weekCheckdate > childBirthday) {
-          weekCheckdate.setDate(weekCheckdate.getDate() - 7);
-          if (weekCheckdate < childBirthday) {
-            this.personalTags.push(`age-${week}w`);
-          }
-          week++;
-        }
-
-        // calculate months
-        let monthCheckdate = new Date();
-        let month = 0;
-        while (monthCheckdate > childBirthday) {
-          monthCheckdate.setMonth(monthCheckdate.getMonth() - 1);
-          if (monthCheckdate < childBirthday) {
-            this.personalTags.push(`age-${month}m`);
-          }
-          month++;
-        }
-
-        // calculate years
-        let yearCheckdate = new Date();
-        let year = 0;
-        while (yearCheckdate > childBirthday) {
-          yearCheckdate.setFullYear(yearCheckdate.getFullYear() - 1);
-          if (yearCheckdate < childBirthday) {
-            this.personalTags.push(`age-${year}y`);
-          }
-          year++;
-        }
-
-      });
-
-      console.log('personalTags', this.personalTags);
-      
-      this.updatePersonalCategory();
     });
 
     this.updatePostsList(null);
 
-    this.presentModal();
+  }
+
+  showWelcomeScreen() {
+    let modal = this.modalCtrl.create(this.tourPage);
+    modal.present();
+    this.welcomeScreenShown = true;
   }
 
   ngOnDestroy() {
     if (this.settingsSubscription) {
       this.settingsSubscription.unsubscribe();
     }
+  }
+
+  updatePersonalTags(settings) {
+    this.personalTags.length = 0;
+    
+    // determine pregnancy week
+    if (settings.birthDate) {
+      let expectedBirthDate = new Date(settings.birthDate);
+      let weekCheckdate = new Date();
+      if (expectedBirthDate > weekCheckdate) {
+        // the baby is not yet born, but we need to check for the
+        // actual birth after 39 week ask is baby really still inside?
+        // if not — ask for the name and set as a child
+        for (let i = 0; i < 40; i++) {
+          weekCheckdate.setDate(weekCheckdate.getDate() + 7);
+          if (weekCheckdate > expectedBirthDate) {
+            this.personalTags.push(`pregnant-${40 - i}w`);
+            break;
+          }
+        }
+
+        // calculating additionally pregnancy month
+        let monthCheckdate = new Date();
+        for (let i = 0; i < 9; i++) {
+          monthCheckdate.setMonth(monthCheckdate.getMonth() + 1);
+          if (monthCheckdate > expectedBirthDate) {
+            this.personalTags.push(`pregnant-${9 - i}m`);
+            break;
+          }
+        }
+
+      } else {
+        // the due date is passed
+        // what to do?
+      }
+    }
+
+    // determine the age group of every child
+    settings.children.forEach((child) => {
+      let childBirthday = new Date(child.birthDate);
+      
+      // calculate weeks
+      let weekCheckdate = new Date();
+      let week = 0;
+      while (weekCheckdate > childBirthday) {
+        weekCheckdate.setDate(weekCheckdate.getDate() - 7);
+        if (weekCheckdate < childBirthday) {
+          this.personalTags.push(`age-${week}w`);
+        }
+        week++;
+      }
+
+      // calculate months
+      let monthCheckdate = new Date();
+      let month = 0;
+      while (monthCheckdate > childBirthday) {
+        monthCheckdate.setMonth(monthCheckdate.getMonth() - 1);
+        if (monthCheckdate < childBirthday) {
+          this.personalTags.push(`age-${month}m`);
+        }
+        month++;
+      }
+
+      // calculate years
+      let yearCheckdate = new Date();
+      let year = 0;
+      while (yearCheckdate > childBirthday) {
+        yearCheckdate.setFullYear(yearCheckdate.getFullYear() - 1);
+        if (yearCheckdate < childBirthday) {
+          this.personalTags.push(`age-${year}y`);
+        }
+        year++;
+      }
+
+    });
+
+    console.log('personalTags', this.personalTags);
+    
+    this.updatePersonalCategory();
   }
 
   updatePostsList(refresher) {

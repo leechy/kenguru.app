@@ -1,24 +1,18 @@
-  ion-popover {
-    .small-text {
-      font-size: 1.2rem;
-    }
-    .large-text {
-      font-size: 2.2rem;
-    }
-    
-    .popover-content {
-      width: 260px !important;
-    }
+ion-popover {
+  .small-text {
+    font-size: 1.2rem;
+  }
+  .large-text {
+    font-size: 2.2rem;
   }
   
-  
-  page-post {
-
-  .content-width {
-    margin: 0 auto;
-    max-width: #{600px - 2 * $content-padding};
+  .popover-content {
+    width: 260px !important;
   }
+}
 
+
+page-post {
   h1 {
     margin: 1em 0 0.2em;
     font: 900 1.6em/1.4em 'Agenda', 'Arial', sans-serif;
