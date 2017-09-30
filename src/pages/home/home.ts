@@ -1,4 +1,3 @@
-import { TourPage } from './../tour/tour';
 import { IsWelcomeScreenShown } from './../../store/settings.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, LoadingController, Loading, ModalController } from 'ionic-angular';
@@ -17,7 +16,6 @@ import * as CategoryActions from "../../store/categories.actions";
 import * as SettingsActions from '../../store/settings.actions';
 import { AppState } from '../../models/app-state.interface';
 import { SettingsInterface } from '../../models/settings.interface';
-import { ShowWelcomeScreen } from '../../store/settings.actions';
 
 
 @Component({
