@@ -83,4 +83,25 @@ page-home {
       background: rgba(255, 255, 255, 0.5);
     }
   }
+
+  .load-error {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    padding: 24px;
+    max-width: 500px;
+    min-height: calc(100vh - 130px);
+    font: 2rem/2.4rem 'Agenda', 'Arial', sans-serif;
+		color: #fff;
+		text-shadow: 2px 2px 4px #b07f00;
+		text-align: center;
+  }
+
+  .copyrights {
+    margin-bottom: 24px !important;
+  }
+  
+  .copyrights p {
+    color: #fff;
+  }
 }

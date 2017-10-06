@@ -1,6 +1,6 @@
 {
     "name": "kenguruapp",
-    "version": "0.6.0",
+    "version": "1.0.0",
     "author": "Andrey Lechev",
     "homepage": "http://kenguru.leechylabs.com/",
     "private": true,
@@ -32,6 +32,7 @@
         "cordova-plugin-device": "1.1.4",
         "cordova-plugin-facebook4": "^1.9.1",
         "cordova-plugin-ionic": "^1.1.9",
+        "cordova-plugin-ionic-webview": "^1.1.14",
         "cordova-plugin-splashscreen": "~4.0.1",
         "cordova-plugin-statusbar": "2.2.2",
         "cordova-plugin-whitelist": "1.3.1",
@@ -73,7 +74,8 @@
                 "UPDATE_METHOD": "background",
                 "UPDATE_API": "https://api.ionicjs.com",
                 "MAX_STORE": "2"
-            }
+            },
+            "cordova-plugin-ionic-webview": {}
         }
     }
 }

@@ -79,10 +79,10 @@ export class SignInPage implements OnInit {
           this.authService.credentialSignIn(response.authResponse.accessToken)
             .then(data => {
               console.log('onFacebookSignup success', data);
-              this.store.dispatch(new AuthActions.FacebookLogin({
+              /* this.store.dispatch(new AuthActions.FacebookLogin({
                 email: data.user.email,
                 token: data.credential.accessToken
-              }));
+              })); */
               this.userProfile = data;
             })
             .catch(error => {

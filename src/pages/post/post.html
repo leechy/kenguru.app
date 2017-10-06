@@ -17,4 +17,17 @@
 		<h1 [innerHtml]="post.title.rendered"></h1>
 		<div [innerHtml]="post.content.rendered"></div>
 	</div>
+
+  <div class="load-error" *ngIf="loadError">
+			Не можем да заредим статията в&nbsp;момента. Когато се&nbsp;появи интернет, върнете се&nbsp;назад и&nbsp;презаредете.
+		</div>
+		
+  <div class="copyrights" *ngIf="post && post.id != 177">
+		<p>&copy; 2006—{{ now.getFullYear() }} Екомедия ООД.</p>
+		<button ion-button block small outline color="#fff" icon-left [navPush]="postPage" [navParams]="{ id: 177 }">
+			<ion-icon name="kenguru-iconk"></ion-icon>
+			&nbsp;
+			За списанието и рекламите
+		</button>
+	</div>
 </ion-content>

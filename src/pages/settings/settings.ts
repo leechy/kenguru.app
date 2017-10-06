@@ -11,6 +11,7 @@ import { AuthInterface } from '../../models/auth.interface';
 
 import { ChildPage } from '../child/child';
 import { SignInPage } from '../sign-in/sign-in';
+import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'page-settings',
@@ -19,6 +20,7 @@ import { SignInPage } from '../sign-in/sign-in';
 export class SettingsPage implements OnInit, OnDestroy {
 
 	// pages
+	homePage: any = HomePage;
 	childPage: any = ChildPage;
 	signInPage: any = SignInPage;
 
@@ -87,6 +89,10 @@ export class SettingsPage implements OnInit, OnDestroy {
 		];
 		let newDate: Date = new Date(date);
 		return newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear() + ' г.';
+	}
+	
+	setRoot(page) {
+		this.navCtrl.setRoot(page);
 	}
 
 }

@@ -1,4 +1,3 @@
-import { IsWelcomeScreenShown } from './../../store/settings.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, LoadingController, Loading, ModalController } from 'ionic-angular';
 import { Http } from '@angular/http';
@@ -13,7 +12,6 @@ import { TourPage } from '../tour/tour';
 
 import { Store } from "@ngrx/store";
 import * as CategoryActions from "../../store/categories.actions";
-import * as SettingsActions from '../../store/settings.actions';
 import { AppState } from '../../models/app-state.interface';
 import { SettingsInterface } from '../../models/settings.interface';
 
@@ -23,11 +21,13 @@ import { SettingsInterface } from '../../models/settings.interface';
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
-  postPage = PostPage;
-  categoryPage = CategoryPage;
-  searchPage = SearchPage;
-  tourPage = TourPage;
-  welcomeScreenShown = false;
+  postPage: any = PostPage;
+  categoryPage: any = CategoryPage;
+  searchPage: any = SearchPage;
+  tourPage: any = TourPage;
+  welcomeScreenShown: boolean = false;
+  loadError: boolean = false;
+  now = new Date();
 
   categoriesUrl: string = 'https://kenguruapp.online/wp-json/wp/v2/categories?per_page=100';
   categories: any[] = [];
@@ -184,7 +184,8 @@ export class HomePage implements OnInit, OnDestroy {
 
         if (refresher) refresher.complete();
         if (loading) loading.dismiss();
-
+        this.loadError = false;
+        
         this.store.dispatch(new CategoryActions.Reset());
         this.categories = data;
 
@@ -201,6 +202,17 @@ export class HomePage implements OnInit, OnDestroy {
             }
           }
         });
+      },
+      error => {
+        console.log('Error loading categories', error);
+
+        if (refresher) refresher.complete();
+        if (loading) loading.dismiss();
+        this.loadError = true;
+        
+        this.store.dispatch(new CategoryActions.Reset());
+        this.categories = [];
+        this.personalPosts = [];
       });
 
   }

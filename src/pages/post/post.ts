@@ -4,6 +4,7 @@ import { App, ViewController, NavController, NavParams, PopoverController } from
 import { SettingsService } from '../../services/settings';
 
 import { SearchPage } from '../search/search';
+import { PostPage } from './post';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -65,7 +66,10 @@ export class PostPopover implements OnInit {
 export class PostPage implements OnInit {
   post: any;
   textSize: number = 4;
-
+  now = new Date();
+  postPage: any = PostPage;
+  loadError: boolean = false
+  
   postUrl = 'https://kenguruapp.online/wp-json/wp/v2/posts/';
 
   settingsState$: Observable<SettingsInterface>;
@@ -90,7 +94,12 @@ export class PostPage implements OnInit {
       this.http.get(this.postUrl + postId + '?_embed')
         .map(res => res.json())
         .subscribe(data => {
+          this.loadError = false;
           this.post = data;
+        },
+        error => {
+          console.log('Error loading post', error);
+          this.loadError = true;
         });
     }
     this.settingsState$ = this.store.select('settings');

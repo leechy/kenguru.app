@@ -18,8 +18,11 @@
 
 <ion-content>
 
-  <ion-refresher (ionRefresh)="updatePostsList($event)">
-    <ion-refresher-content
+  <ion-refresher
+    (ionRefresh)="updatePostsList($event)"
+    pullMax="180"
+  >
+    <ion-refresher-content color="light"
       pullingText="Дръпни за да обновиш"
       refreshingText="Обновяване..."
     >
@@ -73,6 +76,19 @@
       </ng-container>
     </section>
         
+  </div>
+
+  <div class="load-error" *ngIf="loadError">
+    Не можем да заредим статиите в&nbsp;момента. Когато се&nbsp;появи интернет, дръпнете надолу за&nbsp;да&nbsp;презаредите.
+  </div>
+
+  <div margin class="copyrights">
+    <p>&copy; 2006—{{ now.getFullYear() }} Екомедия ООД.</p>
+    <button ion-button block small outline icon-left color="light" [navPush]="postPage" [navParams]="{ id: 177 }" *ngIf="!loadError">
+      <ion-icon name="kenguru-iconk"></ion-icon>
+      &nbsp;
+      За списанието и рекламите
+    </button>
   </div>
 
 </ion-content>

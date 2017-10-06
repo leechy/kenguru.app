@@ -124,6 +124,28 @@ ion-menu .list-ios {
 }
 
 
+/* Kenguru icons */
+ion-icon {
+  &[class*="kenguru-"] {
+      // Instead of using the font-based icons
+      // We're applying SVG masks
+      mask-size: contain;
+      mask-position: 50% 50%;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      width: 1em;
+      height: 1em;
+  }
+  // custom icons
+  &[class*="kenguru-icon"] {
+    mask-image: url(../assets/icon-frame.svg);
+  }
+  &[class*="kenguru-iconk"] {
+    mask-image: url(../assets/icon-k.svg);
+  }
+}
+
+
 /* Common styles */
 
 .category-title {
@@ -142,4 +164,15 @@ ion-menu .list-ios {
 
 .explanation {
 	font: 1.6rem/1.8rem 'Agenda', 'Arial', sans-serif;
+}
+
+.copyrights {
+  margin: 0 auto !important;
+  max-width: 260px;
+}
+
+.copyrights p {
+  margin: 3em 0 0.5em;
+  font: 1em/1.3em 'Agenda', 'Arial', sans-serif;
+  text-align: center;
 }
