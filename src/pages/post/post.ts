@@ -4,7 +4,6 @@ import { App, ViewController, NavController, NavParams, PopoverController } from
 import { SettingsService } from '../../services/settings';
 
 import { SearchPage } from '../search/search';
-import { PostPage } from './post';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
