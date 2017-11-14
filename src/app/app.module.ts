@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, Injectable, Injector } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { Facebook } from '@ionic-native/facebook'
@@ -22,6 +22,32 @@ import { SettingsPage } from '../pages/settings/settings';
 import { ChildPage } from '../pages/child/child';
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { TourPage } from '../pages/tour/tour';
+
+import { Pro } from '@ionic/pro';
+const IonicPro = Pro.init('b4e1a53d', {
+  appVersion: "1.1.1"
+});
+
+@Injectable()
+export class MyErrorHandler implements ErrorHandler {
+  ionicErrorHandler: IonicErrorHandler;
+
+  constructor(injector: Injector) {
+    try {
+      this.ionicErrorHandler = injector.get(IonicErrorHandler);
+    } catch(e) {
+      // Unable to get the IonicErrorHandler provider, ensure
+      // IonicErrorHandler has been added to the providers list below
+    }
+  }
+
+  handleError(err: any): void {
+    IonicPro.monitoring.handleNewError(err);
+    // Remove this if you want to disable Ionic's auto exception handling
+    // in development mode.
+    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -59,7 +85,8 @@ import { TourPage } from '../pages/tour/tour';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    IonicErrorHandler,
+    [{ provide: ErrorHandler, useClass: MyErrorHandler }],
     AuthService,
     SettingsService,
     Facebook
