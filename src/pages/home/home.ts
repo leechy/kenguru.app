@@ -83,10 +83,11 @@ export class HomePage implements OnInit, OnDestroy {
 
   updatePersonalTags(settings) {
     this.personalTags.length = 0;
-    
+
     // determine pregnancy week
     if (settings.birthDate) {
       let expectedBirthDate = new Date(settings.birthDate);
+      console.log('expectedBirthDate', expectedBirthDate);
       let weekCheckdate = new Date();
       if (expectedBirthDate > weekCheckdate) {
         // the baby is not yet born, but we need to check for the
@@ -95,6 +96,7 @@ export class HomePage implements OnInit, OnDestroy {
         for (let i = 0; i < 40; i++) {
           weekCheckdate.setDate(weekCheckdate.getDate() + 7);
           if (weekCheckdate > expectedBirthDate) {
+            console.log('Week', 40 - i);
             this.personalTags.push(`pregnant-${40 - i}w`);
             break;
           }
@@ -105,6 +107,7 @@ export class HomePage implements OnInit, OnDestroy {
         for (let i = 0; i < 9; i++) {
           monthCheckdate.setMonth(monthCheckdate.getMonth() + 1);
           if (monthCheckdate > expectedBirthDate) {
+            console.log('Month', 9 - i);
             this.personalTags.push(`pregnant-${9 - i}m`);
             break;
           }
@@ -119,7 +122,7 @@ export class HomePage implements OnInit, OnDestroy {
     // determine the age group of every child
     settings.children.forEach((child) => {
       let childBirthday = new Date(child.birthDate);
-      
+
       // calculate weeks
       let weekCheckdate = new Date();
       let week = 0;
@@ -156,7 +159,7 @@ export class HomePage implements OnInit, OnDestroy {
     });
 
     console.log('personalTags', this.personalTags);
-    
+
     this.updatePersonalCategory();
   }
 
@@ -185,7 +188,7 @@ export class HomePage implements OnInit, OnDestroy {
         if (refresher) refresher.complete();
         if (loading) loading.dismiss();
         this.loadError = false;
-        
+
         this.store.dispatch(new CategoryActions.Reset());
         this.categories = data;
 
@@ -209,7 +212,7 @@ export class HomePage implements OnInit, OnDestroy {
         if (refresher) refresher.complete();
         if (loading) loading.dismiss();
         this.loadError = true;
-        
+
         this.store.dispatch(new CategoryActions.Reset());
         this.categories = [];
         this.personalPosts = [];

@@ -13,17 +13,19 @@
 <ion-content>
 	<div class="content-width">
 
-		<h2 class="category-title">Томбола</h2>
+		<div showWhen="cordova">
+			<h2 class="category-title">Томбола</h2>
 
-		<p margin class="explanation">За участие в томболата, където всеки месец разиграваме награди, трябва да оставите адреса си за връзка:</p>
-		<p margin>
-			<button ion-button block outline [navPush]="signInPage">
-				<ion-label *ngIf="(this.authState$ | async).authenticated">{{ (this.authState$ | async).userEmail }}</ion-label>
-				<ion-label *ngIf="!(this.authState$ | async).authenticated">Оставете електронния си адрес...</ion-label>
-			</button>
-		</p>
+			<p margin class="explanation">За участие в томболата, където всеки месец разиграваме награди, трябва да оставите адреса си за връзка:</p>
+			<p margin>
+				<button ion-button block outline [navPush]="signInPage">
+					<ion-label *ngIf="(this.authState$ | async).authenticated">{{ (this.authState$ | async).userEmail }}</ion-label>
+					<ion-label *ngIf="!(this.authState$ | async).authenticated">Оставете електронния си адрес...</ion-label>
+				</button>
+			</p>
 
-		<br>
+			<br>
+		</div>
 
 		<h2 class="category-title">Персонализация</h2>
 		<p margin class="explanation">Ако укажете кога очаквате бебето&nbsp;си, всяка седмица ще&nbsp;обновяваме съдържанието за&nbsp;вас и&nbsp;ще следим бременността&nbsp;ви, обяснявайки какво да&nbsp;очаквате.</p>
@@ -34,7 +36,23 @@
 				<ion-toggle [(ngModel)]="isPregnant" (ionChange)="onBirthDateChange()"></ion-toggle>
 			</ion-list-header>
 			<ion-item>
-				<ion-label>Очаквам дете на</ion-label>
+				<ion-label>Последна менструация</ion-label>
+				<ion-datetime
+					[disabled]="!isPregnant"
+					displayFormat="D MMMM YYYY г."
+					pickerFormat="D MMMM YYYY"
+					min="{{ fourtyWeeksAgo.toISOString() }}"
+					max="{{ today.toISOString() }}"
+					[(ngModel)]="lastPeriodDate"
+					(ionChange)="onLastPeriodChange()"
+					monthNames="януари, февруари, март, април, май, юни, юли, август, септември, октомври, ноември, декември"
+					monthShortNames="яну, фев, мар, апр, май, юни, юли, авг, сеп, окт, ное, дек"
+					cancelText="Отмяна"
+					doneText="Готово"
+				></ion-datetime>
+			</ion-item>
+			<ion-item>
+				<ion-label>Очаквам детето на</ion-label>
 				<ion-datetime
 					[disabled]="!isPregnant"
 					displayFormat="D MMMM YYYY г."

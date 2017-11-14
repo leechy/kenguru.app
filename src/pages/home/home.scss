@@ -3,7 +3,7 @@
     position: absolute;
     width: auto;
     height: auto;
-    top: 10px;
+    top: calc(constant(safe-area-inset-top) + 8px);
     right: 10px;
     bottom: 10px;
     left: 10px;
@@ -11,10 +11,33 @@
   }
 }
 
+ion-scroll.scroll-x .scroll-content::-webkit-scrollbar {
+  display: none;
+}
+
 page-home {
 
   .content {
-    background-color: color($colors, background);
+    // background-color: color($colors, background);
+    background-color: #a62a27;
+  }
+
+  ion-content.has-refresher > .scroll-content {
+    background-image: url('../assets/bg-ny.jpg');
+    background-repeat: repeat;
+    background-size: 50%;
+  }
+
+  .refresher-refreshing .spinner-ios line,
+  .refresher-refreshing .spinner-ios-small line,
+  .refresher-refreshing .spinner-crescent circle,
+  .spinner-md-crescent circle {
+    stroke: #fff;
+  }
+
+  .refresher-pulling-text,
+  .refresher-refreshing-text {
+	  color: white;
   }
 
   .category-title {
@@ -43,8 +66,16 @@ page-home {
       width: 240px !important;
       height: 182px;
       overflow: visible;
+
+      transition: transform 0.2s;
+
       &:last-child {
         margin-right: 20px;
+      }
+
+      &.active,
+      &:active {
+        transform: scale(0.95);
       }
     }
 
@@ -59,7 +90,7 @@ page-home {
     .card-title {
       position: absolute;
       top: 100%;
-      padding: 5px;
+      padding: 9px 5px 5px;
       width: 100%;
       font: 1.6rem/1.8rem 'Agenda', 'Arial', sans-serif;
       white-space: normal;
@@ -100,7 +131,7 @@ page-home {
   .copyrights {
     margin-bottom: 24px !important;
   }
-  
+
   .copyrights p {
     color: #fff;
   }

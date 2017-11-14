@@ -5,7 +5,7 @@ ion-popover {
   .large-text {
     font-size: 2.2rem;
   }
-  
+
   .popover-content {
     width: 260px !important;
   }
@@ -15,17 +15,23 @@ ion-popover {
 page-post {
   h1 {
     margin: 1em 0 0.2em;
-    font: 900 1.6em/1.4em 'Agenda', 'Arial', sans-serif;
+    font: 900 1.6em/1.2em 'Agenda', 'Arial', sans-serif;
   }
   h2, h3 {
-    margin: 1em 0 0.6em;
-    font: bold 1.3em/1.4em 'Agenda', 'Arial', sans-serif;
+    margin: 1em 0 0.3em;
+    font: bold 1.3em/1.2em 'Agenda', 'Arial', sans-serif;
   }
   p, li {
     font: 1em/1.3em 'Agenda', 'Arial', sans-serif;
   }
   p {
-    margin: 1.2em 0;
+    margin: 0.4em 0 1.2em 0;
+  }
+  blockquote {
+    margin: 0.4em 0;
+    padding: 0;
+    font-weight: 700;
+    font-style: italic;
   }
   img {
     margin-left: -$content-padding;

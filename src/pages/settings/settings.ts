@@ -27,24 +27,28 @@ export class SettingsPage implements OnInit, OnDestroy {
 	// settings
 	isPregnant: boolean = false;
 	birthDate: string = null;
+  lastPeriodDate: string = null;
 	children: any[] = [];
 
 	// service variables
+  today: Date = new Date();
 	yesterday: Date = new Date();
 	fourtyWeeksFromToday: Date = new Date();
+  fourtyWeeksAgo: Date = new Date();
 
 	settingsState$: Observable<SettingsInterface>;
   settingsSubscription: Subscription;
   authState$: Observable<AuthInterface>;
-	
+
 	constructor(
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		private settingsService: SettingsService,
 		private store: Store<AppState>
 	) {
-		this.yesterday.setDate(-1);
-		this.fourtyWeeksFromToday.setDate(this.yesterday.getDate() + 265);
+		this.yesterday.setDate(this.yesterday.getDate() - 1);
+		this.fourtyWeeksFromToday.setDate(this.today.getDate() + 280);
+    this.fourtyWeeksAgo.setDate(this.today.getDate() - 280);
 	}
 
 	// get data from store
@@ -52,7 +56,12 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.settingsState$ = this.store.select('settings');
     this.settingsSubscription = this.settingsState$.subscribe(settings => {
 			this.birthDate = settings.birthDate;
-			if (this.birthDate) this.isPregnant = true;
+			if (this.birthDate) {
+        this.isPregnant = true;
+        this.lastPeriodDate = this.calcLastPeriodDateByBirthDate(this.birthDate);
+      } else {
+        this.lastPeriodDate = null;
+      }
 			this.children = settings.children;
 		});
 		this.authState$ = this.store.select('auth');
@@ -62,6 +71,27 @@ export class SettingsPage implements OnInit, OnDestroy {
     if (this.settingsSubscription) {
       this.settingsSubscription.unsubscribe();
     }
+  }
+
+  calcLastPeriodDateByBirthDate(birthDate): string {
+    let lastPeriodDate = new Date(birthDate);
+    lastPeriodDate.setDate(lastPeriodDate.getDate() - 280);
+    return lastPeriodDate.toISOString();
+  }
+
+  calcBirthDateByLastPeriodDate(lastPeriodDate): string {
+    let birthDate = new Date(lastPeriodDate);
+    birthDate.setDate(birthDate.getDate() + 280);
+    return birthDate.toISOString();
+  }
+
+  onLastPeriodChange() {
+    if (this.isPregnant && this.lastPeriodDate) {
+      this.birthDate = this.calcBirthDateByLastPeriodDate(this.lastPeriodDate);
+      this.settingsService.setBirthDate(this.birthDate);
+    } else {
+			this.settingsService.removeBirthDate();
+		}
   }
 
 	onBirthDateChange() {
@@ -90,7 +120,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 		let newDate: Date = new Date(date);
 		return newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear() + ' г.';
 	}
-	
+
 	setRoot(page) {
 		this.navCtrl.setRoot(page);
 	}
