@@ -11,15 +11,16 @@ export function authReducer(state = initialState, action: AuthActions.All) {
   switch (action.type) {
     case AuthActions.SIGNIN:
     case AuthActions.SIGNUP:
-    return {
-      ...state,
-      authenticated: true,
-      userEmail: action.payload
-    }
-  case AuthActions.FACEBOOK_LOGIN:
       return {
         ...state,
         authenticated: true,
+        userEmail: action.payload
+      }
+    case AuthActions.FACEBOOK_LOGIN:
+      return {
+        ...state,
+        authenticated: true,
+        userId: action.payload.uid,
         userEmail: action.payload.email,
         facebookToken: action.payload.token
       }
@@ -27,6 +28,13 @@ export function authReducer(state = initialState, action: AuthActions.All) {
       return {
         ...state,
         facebookToken: action.payload
+      }
+    case AuthActions.ANONYMOUS_LOGIN:
+      return {
+        ...state,
+        authenticated: true,
+        userEmail: '',
+        facebookToken: ''
       }
     case AuthActions.LOGOUT:
       return {

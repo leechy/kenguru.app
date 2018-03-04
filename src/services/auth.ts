@@ -1,6 +1,11 @@
 import firebase from 'firebase';
 
 export class AuthService {
+
+  anonymousLogin() {
+    return firebase.auth().signInAnonymously();
+  }
+
   signup(email: string, password: string) {
     return firebase.auth().createUserWithEmailAndPassword(email, password);
   }
@@ -14,7 +19,8 @@ export class AuthService {
   }
 
   facebookLogin() {
-    return firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return firebase.auth().signInWithPopup(provider);
   }
 
   credentialSignIn(accessToken) {
