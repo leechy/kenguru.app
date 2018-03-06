@@ -27,20 +27,21 @@
         "@ionic/pro": "^1.0.14",
         "@ionic/storage": "^2.1.3",
         "@ngrx/store": "^4.1.0",
-        "cordova-android": "^6.4.0",
-        "cordova-ios": "^4.5.3",
-        "cordova-plugin-add-swift-support": "^1.7.0",
-        "cordova-plugin-device": "1.1.4",
+        "cordova-android": "6.4.0",
+        "cordova-ios": "4.5.4",
+        "cordova-plugin-add-swift-support": "^1.7.1",
+        "cordova-plugin-crosswalk-webview": "^2.4.0",
+        "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-facebook4": "^1.9.1",
         "cordova-plugin-ionic": "^1.1.9",
         "cordova-plugin-jshybugger": "git+https://github.com/jsHybugger/cordova-plugin-jshybugger.git",
-        "cordova-plugin-splashscreen": "~4.0.1",
-        "cordova-plugin-statusbar": "2.2.2",
-        "cordova-plugin-whitelist": "1.3.1",
-        "cordova-sqlite-storage": "^2.1.0",
+        "cordova-plugin-splashscreen": "^4.0.3",
+        "cordova-plugin-statusbar": "^2.2.2",
+        "cordova-plugin-whitelist": "^1.3.1",
+        "cordova-sqlite-storage": "^2.2.1",
         "firebase": "^4.6.2",
         "ionic-angular": "^3.9.2",
-        "ionic-plugin-keyboard": "~2.2.1",
+        "ionic-plugin-keyboard": "^2.2.1",
         "ionicons": "^3.0.0",
         "promise-polyfill": "6.0.2",
         "rxjs": "5.5.2",
@@ -75,7 +76,8 @@
                 "UPDATE_API": "https://api.ionicjs.com",
                 "MAX_STORE": "2"
             },
-            "org.jshybugger.cordova": {}
+            "org.jshybugger.cordova": {},
+            "cordova-plugin-crosswalk-webview": {}
         }
     }
 }
