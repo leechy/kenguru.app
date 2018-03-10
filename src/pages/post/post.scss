@@ -79,8 +79,12 @@ page-post {
     max-width: 500px;
     min-height: calc(100vh - 130px);
     font: 2rem/2.4rem 'Agenda', 'Arial', sans-serif;
-		color: #000;
-		text-shadow: 2px 2px 4px #ddd;
-		text-align: center;
+    color: #000;
+    text-shadow: 2px 2px 4px #ddd;
+    text-align: center;
+  }
+
+  iframe {
+    max-width: 100%;
   }
 }

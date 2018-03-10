@@ -5,8 +5,8 @@
 		</ion-title>
 		<ion-buttons end>
 			<button ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
+				<ion-icon name="more"></ion-icon>
+			</button>
 		</ion-buttons>
 	</ion-navbar>
 </ion-header>
@@ -14,15 +14,15 @@
 <ion-content padding>
 	<div class="content-width" [ngStyle]="{'font-size': (1.4 + (textSize * 0.1)) + 'rem'}" *ngIf="post && post.type">
 		<img *ngIf="post._embedded['wp:featuredmedia']" src="{{ post._embedded['wp:featuredmedia'][0].source_url }}" />
-		<h1 [innerHtml]="post.title.rendered"></h1>
-		<div [innerHtml]="post.content.rendered"></div>
+		<h1 [innerHtml]="postTitle"></h1>
+		<div [innerHtml]="postContent"></div>
 	</div>
 
-  <div class="load-error" *ngIf="loadError">
-			Не можем да заредим статията в&nbsp;момента. Когато се&nbsp;появи интернет, върнете се&nbsp;назад и&nbsp;презаредете.
-		</div>
-		
-  <div class="copyrights" *ngIf="post && post.id != 177">
+	<div class="load-error" *ngIf="loadError">
+		Не можем да заредим статията в&nbsp;момента. Когато се&nbsp;появи интернет, върнете се&nbsp;назад и&nbsp;презаредете.
+	</div>
+
+	<div class="copyrights" *ngIf="post && post.id != 177">
 		<p>&copy; 2006—{{ now.getFullYear() }} Екомедия ООД.</p>
 		<button ion-button block small outline color="#fff" icon-left [navPush]="postPage" [navParams]="{ id: 177 }">
 			<ion-icon name="kenguru-iconk"></ion-icon>

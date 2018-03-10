@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import { App, ViewController, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { SettingsService } from '../../services/settings';
@@ -30,14 +31,14 @@ import { SettingsInterface } from '../../models/settings.interface';
 export class PostPopover implements OnInit {
   textSize: number = 4;
   searchPage = SearchPage;
-  
+
   constructor(
     public appCtrl: App,
     public viewCtrl: ViewController,
     private navParams: NavParams,
     private settingsService: SettingsService
   ) {}
-  
+
   ngOnInit() {
     if (this.navParams.data) {
       this.textSize = this.navParams.data.textSize;
@@ -49,10 +50,10 @@ export class PostPopover implements OnInit {
     this.appCtrl.getRootNav().push(this.searchPage);
   }
 
-	// saving text size
-	onTextSizeChange(event) {
-		this.settingsService.setTextSize(event.value);
-	}
+  // saving text size
+  onTextSizeChange(event) {
+    this.settingsService.setTextSize(event.value);
+  }
 
 }
 
@@ -64,11 +65,13 @@ export class PostPopover implements OnInit {
 })
 export class PostPage implements OnInit {
   post: any;
+  postTitle: string;
+  postContent: SafeHtml;
   textSize: number = 4;
   now = new Date();
   postPage: any = PostPage;
   loadError: boolean = false
-  
+
   postUrl = 'https://kenguruapp.online/wp-json/wp/v2/posts/';
 
   settingsState$: Observable<SettingsInterface>;
@@ -79,14 +82,18 @@ export class PostPage implements OnInit {
     private http: Http,
     private popoverCtrl: PopoverController,
     public navParams: NavParams,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private sanitizer: DomSanitizer
   ) {
 
   }
 
   ngOnInit() {
     if (this.navParams.data.type) {
-      this.post = this.navParams.data;
+      let data = this.navParams.data;
+      this.post = data;
+      this.postTitle = data.title.rendered;
+      this.postContent = this.sanitizer.bypassSecurityTrustHtml(data.content.rendered);
     } else if (this.navParams.data.id && !isNaN(this.navParams.data.id)) {
       let postId = this.navParams.data.id
       // we need to load the post from API
@@ -95,6 +102,9 @@ export class PostPage implements OnInit {
         .subscribe(data => {
           this.loadError = false;
           this.post = data;
+          this.postTitle = data.title.rendered;
+          this.postContent = this.sanitizer.bypassSecurityTrustHtml(data.content.rendered);
+          console.log('PostPage', data.content.rendered, this.postContent);
         },
         error => {
           console.log('Error loading post', error);
@@ -114,5 +124,5 @@ export class PostPage implements OnInit {
 
     popover.present({ ev: ev });
   }
-    
+
 }

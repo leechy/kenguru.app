@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Списание Кенгуру",
+  "short_name": "Кенгуру",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
