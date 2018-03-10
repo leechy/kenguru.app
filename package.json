@@ -74,7 +74,6 @@
                 "UPDATE_API": "https://api.ionicjs.com",
                 "MAX_STORE": "2"
             },
-            "org.jshybugger.cordova": {},
             "cordova-plugin-crosswalk-webview": {}
         }
     }
