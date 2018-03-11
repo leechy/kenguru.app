@@ -78,6 +78,7 @@ ion-menu .list-ios {
 .content-width {
   margin: 0 auto;
   max-width: #{600px - 2 * $content-padding};
+  min-height: 70vh;
 }
 
 
